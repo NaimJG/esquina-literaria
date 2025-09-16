@@ -1,3 +1,63 @@
-.Home-component {
+.homeContainer {
+  color: #0e7c86;
   display: flex;
+  flex-direction: column;
+  width: 100vw;
+}
+
+.authHomeButtons {
+  border: 0;
+  border: none;
+  outline: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.authHomeButtons button {
+  border-radius: 6px;
+  border: 1px solid white;
+}
+
+.loginHome,
+.signHome {
+  width: 110px;
+  height: 40px;
+}
+
+.loginHome {
+  background-color: #b5e4e8;
+  color: #000000;
+}
+
+.signHome {
+  background-color: #0e7c86;
+  color: #ffffff;
+}
+
+.homeSection {
+  border: 1px solid black;
+  display: flex;
+  flex-grow: 1;
+  box-sizing: border-box;
+  justify-content: space-evenly;
+  padding: 120px;
+}
+
+.leftSection {
+  display: flex;
+  box-sizing: border-box;
+  border: 1px solid black;
+  width: 30%;
+  justify-content: center;
+}
+
+.rightSection {
+  display: flex;
+  box-sizing: border-box;
+  border: 1px solid black;
+  width: 30%;
+  justify-content: center;
 }

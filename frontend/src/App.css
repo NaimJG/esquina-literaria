@@ -1,5 +1,12 @@
 #root {
   margin: 0 auto;
   text-align: center;
-  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }

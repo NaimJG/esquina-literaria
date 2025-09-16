@@ -14,7 +14,7 @@ function Header() {
           <li>Inicio</li>
           <li>Explorar</li>
           <li>Comunidad</li>
-          <li>Contácto</li>
+          <li>Tienda</li>
         </ul>
         <div className='authButtons'>
           <button className='signButton'>
