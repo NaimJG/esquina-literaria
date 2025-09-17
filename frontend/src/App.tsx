@@ -2,6 +2,9 @@ import { Route, Routes } from 'react-router-dom'
 import './App.css'
 import Header from './components/Header/Header'
 import Home from './pages/Home/Home'
+import Catalogue from './pages/Catalogue/Catalogue'
+import Community from './pages/Community/Community'
+import Store from './pages/Store/Store'
 
 function App() {
   return (
@@ -12,9 +15,9 @@ function App() {
       <main>
         <Routes>
           <Route path='/' element={<Home />} />
-          <Route>
-
-          </Route>
+          <Route path='/catalogue' element={<Catalogue />} />
+          <Route path='/community' element={<Community />} />
+          <Route path='/store' element={<Store />} />
         </Routes>
       </main>
     </>

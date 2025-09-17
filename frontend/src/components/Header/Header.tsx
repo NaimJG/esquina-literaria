@@ -1,5 +1,6 @@
 import React from 'react'
 import "./Header.css";
+import { Link } from 'react-router-dom';
 
 function Header() {
   return (
@@ -11,10 +12,10 @@ function Header() {
           </a>
         </h1>
         <ul className='navList'>
-          <li>Inicio</li>
-          <li>Explorar</li>
-          <li>Comunidad</li>
-          <li>Tienda</li>
+          <li><Link to="/">Inicio</Link></li>
+          <li><Link to="/catalogue">Explorar</Link></li>
+          <li><Link to="/community">Comunidad</Link></li>
+          <li><Link to="/store">Tienda</Link></li>
         </ul>
         <div className='authButtons'>
           <button className='signButton'>
