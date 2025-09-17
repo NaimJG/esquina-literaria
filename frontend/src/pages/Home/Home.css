@@ -48,16 +48,25 @@
 
 .leftSection {
   display: flex;
+  flex-direction: column;
   box-sizing: border-box;
   border: 1px solid black;
   width: 30%;
-  justify-content: center;
+  position: relative;
+  height: 300px;
 }
 
 .rightSection {
   display: flex;
+  flex-direction: column;
   box-sizing: border-box;
   border: 1px solid black;
   width: 30%;
-  justify-content: center;
+  position: relative;
+  height: 300px;
+}
+
+.swiperContainer {
+  display: flex;
+  position: relative;
 }

@@ -1,5 +1,6 @@
 import React from 'react'
 import './Home.css'
+import SwiperComponent from '../../components/SwiperComponent/SwiperComponent'
 
 function Home() {
   return (
@@ -18,9 +19,11 @@ function Home() {
       <section className='homeSection'>
         <div className='leftSection'>
           <h3>Lo más leído de la semana</h3>
+          <SwiperComponent></SwiperComponent>
         </div>
         <div className='rightSection'>
           <h3>Los más vendidos</h3>
+          <SwiperComponent></SwiperComponent>
         </div>
       </section>
     </>
