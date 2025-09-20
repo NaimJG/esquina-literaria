@@ -1,10 +1,3 @@
-.homeContainer {
-  color: #0e7c86;
-  display: flex;
-  flex-direction: column;
-  width: 100vw;
-}
-
 .authHomeButtons {
   border: 0;
   border: none;
@@ -51,8 +44,7 @@
   flex-direction: column;
   box-sizing: border-box;
   border: 1px solid black;
-  width: 30%;
-  position: relative;
+  width: 30%; 
   height: 300px;
 }
 
@@ -62,6 +54,5 @@
   box-sizing: border-box;
   border: 1px solid black;
   width: 30%;
-  position: relative;
   height: 300px;
 }

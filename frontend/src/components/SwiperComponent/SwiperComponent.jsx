@@ -22,7 +22,12 @@ function SwiperComponent() {
         <SwiperSlide><div style={{ background: '#c9f', height: 150 }}>Slide 2</div></SwiperSlide>
         <SwiperSlide><div style={{ background: '#fc9', height: 150 }}>Slide 3</div></SwiperSlide>
         <SwiperSlide><div style={{ background: '#9fc', height: 150 }}>Slide 4</div></SwiperSlide>
-        <SwiperSlide><div style={{ background: 'rgba(224, 127, 127, 1)', height: 150 }}>Slide 5</div></SwiperSlide>
+        <SwiperSlide><div style={{ background: '#e07f7f', height: 150 }}>Slide 5</div></SwiperSlide>
+        <SwiperSlide><div style={{ background: '#d396f0', height: 150 }}>Slide 6</div></SwiperSlide>
+        <SwiperSlide><div style={{ background: '#8d8fee', height: 150 }}>Slide 7</div></SwiperSlide>
+        <SwiperSlide><div style={{ background: '#e5f7a4', height: 150 }}>Slide 8</div></SwiperSlide>
+        <SwiperSlide><div style={{ background: '#f7b3b3', height: 150 }}>Slide 9</div></SwiperSlide>
+        <SwiperSlide><div style={{ background: '#a5f8b1', height: 150 }}>Slide 10</div></SwiperSlide>
       </Swiper>
     </div>
   );

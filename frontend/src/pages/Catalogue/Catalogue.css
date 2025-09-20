@@ -1,3 +1,12 @@
-.Catalog-component {
-  display: flex;
+.catalogueContainer {
+  display: flex;   /* asegurar límite */
+  flex-direction: column;
+  flex-grow: 1;
+  width: 100%;
+  justify-content: space-evenly;
+}
+
+.swiper-section {
+  height: 320px;
+  padding: 0 120px;
 }
