@@ -6,8 +6,6 @@
   flex-direction: column;
 }
 
-/* /////////////////////////////////////////////////////////////////////////// */
-
 .homeSectionTop {
   display: flex;
   width: 100%;
@@ -15,8 +13,6 @@
   justify-content: space-evenly;  
   padding: 40px 0;
 }
-
-/* /////////////////////////////////////////////////////////////////////////// */
 
 .homeSectionTopLeft {
   box-sizing: border-box;
@@ -29,8 +25,6 @@
 .homeImg {
   height: 700px;
 }
-
-/* /////////////////////////////////////////////////////////////////////////// */
 
 .homeSectionTopRight {
   box-sizing: border-box;
@@ -81,9 +75,6 @@ h1 {
   border: 1px solid black;
 }
 
-
-/* /////////////////////////////////////////////////////////////////////////// */
-
 .homeSectionBottom {
   box-sizing: border-box;
   width: 100%;
@@ -92,8 +83,6 @@ h1 {
   padding: 80px;
   gap: 40px;
 }
-
-/* ////////////////////////////////////////////////////////////////////// */
 
 .topSwiper {
   display: flex;
