@@ -11,7 +11,7 @@ function Home() {
             <img className='homeImg' alt='homeImg' src='../../../public/img/ilustracion-chica-leyendo.jpg'></img>
           </section>
           <section className="homeSectionTopRight">
-            <h1>Bienvenido a la Esquina Literaria. La Esquina en la que converge la Literarura</h1>
+            <h1>Bienvenido a la Esquina Literaria, el lugar donde converge la Literarura.</h1>
             <br></br>
             <div className='authHomeContainer'>
               <div className='authHomeText'>

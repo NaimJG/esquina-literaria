@@ -1,4 +1,6 @@
 .navbar {
+  position: fixed;
+  overflow: hidden;
   display: flex;
   align-items: center;
   min-width: 100vw;
@@ -46,7 +48,7 @@
 .navList li {
   cursor: pointer;
   font-weight: 500;
-  font-size: 18px;
+  font-size: 16px;
 }
 
 a {
@@ -78,7 +80,7 @@ a:active {
   border: 1px solid black;
   height: 42px;
   width: 120px;
-  font-size: 18px;
+  font-size: 15px;
 }
 
 button:hover {
