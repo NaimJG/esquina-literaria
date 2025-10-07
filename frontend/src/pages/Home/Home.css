@@ -64,6 +64,9 @@ h1 {
 }
 
 .loginGuestButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 200px;
   height: 64px;
   padding: 0 10px;
@@ -73,6 +76,16 @@ h1 {
   font-size: 16px;
   font-weight: 600;
   border: 1px solid black;
+}
+
+.loginGuestButton:hover {
+  background-color: rgb(120, 104, 88);
+  cursor: pointer;
+  color: black;
+}
+
+.loginGuestButton:active {
+  transform: scale(0.98);
 }
 
 .homeSectionBottom {

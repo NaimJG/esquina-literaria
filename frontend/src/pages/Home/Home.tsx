@@ -1,6 +1,7 @@
 // import React from 'react'
 import './Home.css'
 import SwiperComponent from '../../components/SwiperComponent/SwiperComponent'
+import { Link } from 'react-router-dom'
 
 function Home() {
   return (
@@ -18,9 +19,9 @@ function Home() {
                 <h2>Comparte tus reseñas con el mundo y debate sobre tus libros favoritos</h2>
               </div>
               <div className='buttonsContainer'>
-                <button className='loginGuestButton'>
+                <Link to="/home" className='loginGuestButton'>
                   Ingresar como invitado
-                </button>
+                </Link>
               </div>
             </div>
           </section>

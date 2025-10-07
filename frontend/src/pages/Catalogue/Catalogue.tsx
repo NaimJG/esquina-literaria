@@ -1,19 +1,16 @@
 import React from 'react'
 import './Catalogue.css'
-import SwiperComponent from '../../components/SwiperComponent/SwiperComponent'
+import Rank from '../../components/Rank/Rank'
 
 function Catalogue() {
   return (
     <>
       <section className='catalogueContainer'>
-        <div className='swiper-section'> {/* <-- Usas la clase común */}
-          <h2>Tendencia</h2>
-          <SwiperComponent></SwiperComponent>
-        </div>
-        <div className='swiper-section'> {/* <-- Y la reutilizas */}
-          <h2>Los mejores valorados</h2>
-          <SwiperComponent></SwiperComponent>
-        </div>
+        <aside className='catalogueAside'></aside>
+        <section className='catalogueMain'>
+          <Rank />
+        </section>
+        <aside className='asideComments'></aside>
       </section>
     </>
   )

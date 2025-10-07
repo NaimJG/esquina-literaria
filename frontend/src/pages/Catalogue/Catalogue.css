@@ -1,9 +1,27 @@
 .catalogueContainer {
-  display: flex;   /* asegurar límite */
-  flex-direction: column;
-  flex-grow: 1;
+  display: flex;
   width: 100%;
-  justify-content: space-evenly;
+  box-sizing: border-box;
+  border: 1px solid red;
+}
+
+.catalogueAside{
+  height: 100%;
+  width: 500px;
+  border: 1px solid blue;
+}
+
+.catalogueMain {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  border: 1px solid green;
+}
+
+.asideComments{
+  width: 500px;
+  height: 100%;
+  border: 1px solid purple;
 }
 
 .swiper-section {

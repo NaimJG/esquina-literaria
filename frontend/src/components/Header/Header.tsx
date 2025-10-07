@@ -13,7 +13,7 @@ function Header() {
         </div>
         <div className='navItemsContainer'>
           <ul className='navList'>
-            <li><Link to="/us">Nosotros</Link></li>
+            <li><Link to="/home">Explorar</Link></li>
           </ul>
           <div className='authButtons'>
             <button className='signButton'>
