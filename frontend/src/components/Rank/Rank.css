@@ -1,3 +1,5 @@
-.Library-component {
-  display: flex;
+.lista-libros{
+  height: 100%;
+
+  border: 1px solid red;
 }

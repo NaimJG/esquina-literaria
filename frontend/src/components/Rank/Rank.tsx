@@ -10,15 +10,15 @@ const todosLosLibros: Book[] = [
 ];
 
 function Rank() {
-   
+
   return (
-    <div>
+    <>
       <div className="lista-libros">
         {todosLosLibros.map(libro => (
           <BookCard key={libro.id} libro={libro} />
         ))}
       </div>
-    </div>
+    </>
   );
 }
 

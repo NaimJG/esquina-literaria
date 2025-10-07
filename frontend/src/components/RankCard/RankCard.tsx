@@ -6,7 +6,7 @@ function BookCard({ libro }: BookCardProps) {
   // Ahora podemos acceder a todas las propiedades de 'libro' directamente.
   return (
     <>
-      <Card sx={{ display: 'flex', maxWidth: 600 }}>
+      <Card sx={{ maxWidth: 600, height: '100%', display: 'flex' }}>
         <CardMedia sx={{ width: 200 }}
           component="img"
           alt="green iguana"
