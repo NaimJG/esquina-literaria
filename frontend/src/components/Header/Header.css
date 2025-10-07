@@ -1,6 +1,4 @@
 .navbar {
-  position: fixed;
-  overflow: hidden;
   display: flex;
   align-items: center;
   min-width: 100vw;

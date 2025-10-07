@@ -9,18 +9,17 @@
 /* /////////////////////////////////////////////////////////////////////////// */
 
 .homeSectionTop {
-  box-sizing: border-box;
-  width: 100%;
   display: flex;
-  flex-direction: row;
-  height: 100vh;
+  width: 100%;
+  box-sizing: border-box;
+  justify-content: space-evenly;  
+  padding: 40px 0;
 }
 
 /* /////////////////////////////////////////////////////////////////////////// */
 
 .homeSectionTopLeft {
   box-sizing: border-box;
-  width: 50%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -35,12 +34,12 @@
 
 .homeSectionTopRight {
   box-sizing: border-box;
-  width: 50%;
   display: flex;
   flex-direction: column;
-  padding: 0 80px;
-  align-items: center;
   justify-content: center;
+  align-content: space-evenly;
+  height: 100%;
+  width: 800px;
 }
 
 .authHomeContainer {
@@ -54,16 +53,20 @@
 }
 
 h1 {
+  margin: 0;
   font-size: 3em;
   line-height: 1.1;
+  text-align: start;
 }
 
 .authHomeText h2 {
-  text-align: left;
+  text-align: start;
 }
 
 .buttonsContainer {
   width: 50%;
+  display: flex;
+  justify-content: center;
 }
 
 .loginGuestButton {

@@ -8,7 +8,7 @@ function Home() {
       <div className='homeContainer'>
         <div className='homeSectionTop'>
           <section className='homeSectionTopLeft'>
-            <img className='homeImg' alt='homeImg' src='../../../public/img/ilustracion-chica-leyendo.jpg'></img>
+            <img className='homeImg' alt='homeImg' src='/img/ilustracion-chica-leyendo.jpg'></img>
           </section>
           <section className="homeSectionTopRight">
             <h1>Bienvenido a la Esquina Literaria, el lugar donde converge la Literarura.</h1>
