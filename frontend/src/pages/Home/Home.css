@@ -1,58 +1,103 @@
-.authHomeButtons {
-  border: 0;
-  border: none;
-  outline: none;
-  margin: 0;
-  padding: 0;
+.homeContainer {
+  box-sizing: border-box;
+  width: 100%;
   display: flex;
+  flex-direction: column;
+}
+
+/* /////////////////////////////////////////////////////////////////////////// */
+
+.homeSectionTop {
+  box-sizing: border-box;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  height: 100vh;
+}
+
+/* /////////////////////////////////////////////////////////////////////////// */
+
+.homeSectionTopLeft {
+  box-sizing: border-box;
+  width: 50%;
+  display: flex;
+  flex-direction: column;
   justify-content: center;
-  gap: 20px;
+  align-items: center;
+  padding: 80px;
 }
 
-.authHomeButtons button {
-  border-radius: 6px;
-  border: 1px solid white;
+.homeImg {
+  width: 100%;
 }
 
-.loginHome,
-.signHome {
-  width: 110px;
-  height: 40px;
-}
+/* /////////////////////////////////////////////////////////////////////////// */
 
-.loginHome {
-  background-color: #b5e4e8;
-  color: #000000;
-}
-
-.signHome {
-  background-color: #0e7c86;
-  color: #ffffff;
-}
-
-.homeSection {
-  border: 1px solid black;
-  display: flex;
-  flex-grow: 1;
+.homeSectionTopRight {
   box-sizing: border-box;
-  justify-content: space-evenly;
-  padding: 120px;
-}
-
-.leftSection {
+  width: 50%;
   display: flex;
   flex-direction: column;
-  box-sizing: border-box;
-  border: 1px solid black;
-  width: 30%; 
-  height: 300px;
+  padding: 80px;
+  align-items: center;
+  justify-content: center;
 }
 
-.rightSection {
+.authHomeContainer {
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.authHomeText {
+  width: 50%;
+}
+
+h1 {
+  font-size: 3.2em;
+  line-height: 1.1;
+}
+
+.authHomeText h2 {
+  text-align: left;
+}
+
+.buttonsContainer {
+  width: 50%;
+}
+
+.loginGuestButton {
+  width: 200px;
+  height: 80px;
+  border-radius: 20px;
+  background-color: rgb(141, 123, 104);
+  color: black;
+  font-size: 20px;
+  border: 1px solid black;
+}
+
+
+/* /////////////////////////////////////////////////////////////////////////// */
+
+.homeSectionBottom {
+  box-sizing: border-box;
+  width: 100%;
   display: flex;
   flex-direction: column;
-  box-sizing: border-box;
-  border: 1px solid black;
-  width: 30%;
-  height: 300px;
+  padding: 80px;
+  gap: 40px;
+}
+
+/* ////////////////////////////////////////////////////////////////////// */
+
+.topSwiper {
+  display: flex;
+  flex-direction: column;
+  width: 100%; 
+}
+
+.bottomSwiper {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
 }
