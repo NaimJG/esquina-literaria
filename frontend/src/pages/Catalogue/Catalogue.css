@@ -1,27 +1,27 @@
 .catalogueContainer {
   display: flex;
-  width: 100%;
-  box-sizing: border-box;
-  border: 1px solid red;
+  width: 100%;  
 }
 
 .catalogueAside{
   height: 100%;
   width: 500px;
-  border: 1px solid blue;
+  
+  box-sizing: border-box;
 }
 
 .catalogueMain {
   width: 100%;
   display: flex;
   justify-content: center;
-  border: 1px solid green;
+  padding: 40px 0px;
+  box-sizing: border-box;
 }
 
 .asideComments{
   width: 500px;
   height: 100%;
-  border: 1px solid purple;
+  box-sizing: border-box;
 }
 
 .swiper-section {
