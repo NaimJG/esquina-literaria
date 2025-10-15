@@ -16,12 +16,12 @@ function Header() {
             <li><Link to="/home">Explorar</Link></li>
           </ul>
           <div className='authButtons'>
-            <button className='signButton'>
+            <Link to="/signup" className='signButton'>
               Registrarse
-            </button>
-            <button className='loginButton'>
+            </Link>
+            <Link to="/login" className='loginButton'>
               Ingresar
-            </button>
+            </Link>
           </div>
         </div>
       </nav>

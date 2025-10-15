@@ -5,6 +5,7 @@ import Home from './pages/Home/Home'
 import Catalogue from './pages/Catalogue/Catalogue'
 import Community from './pages/Community/Community'
 import Store from './pages/Store/Store'
+import SignUp from './pages/SignUp/SignUp'
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
           <Route path='/home' element={<Catalogue />} />
           <Route path='/community' element={<Community />} />
           <Route path='/store' element={<Store />} />
+          <Route path='/signup' element={<SignUp />} />
         </Routes>
       </main>
     </>

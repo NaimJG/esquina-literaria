@@ -12,29 +12,25 @@ function Home() {
             <img className='homeImg' alt='homeImg' src='/img/ilustracion-chica-leyendo.jpg'></img>
           </section>
           <section className="homeSectionTopRight">
-            <h1>Bienvenido a la Esquina Literaria, el lugar donde converge la Literarura.</h1>
-            <br></br>
             <div className='authHomeContainer'>
-              <div className='authHomeText'>
-                <h2>Comparte tus reseñas con el mundo y debate sobre tus libros favoritos</h2>
-              </div>
-              <div className='buttonsContainer'>
-                <Link to="/home" className='loginGuestButton'>
-                  Ingresar como invitado
-                </Link>
+              <h1>Bienvenido a la Esquina Literaria, el lugar donde converge la Literarura.</h1>
+              <br></br>
+              <div className='authHomeContent'>
+                <div className='authHomeText'>
+                  <h2>Comparte tus reseñas con el mundo y debate sobre tus libros favoritos</h2>
+                </div>
+                <div className='buttonsContainer'>
+                  <Link to="/home" className='loginGuestButton'>
+                    Ingresar como invitado
+                  </Link>
+                </div>
               </div>
             </div>
+            <div className='topSwiper'>
+              <h3>Lo más leído de la semana</h3>
+              <SwiperComponent></SwiperComponent>
+            </div>
           </section>
-        </div>
-        <div className='homeSectionBottom'>
-          <div className='topSwiper'>
-            <h3>Lo más leído de la semana</h3>
-            <SwiperComponent></SwiperComponent>
-          </div>
-          <div className='bottomSwiper'>
-            <h3>Los más vendidos</h3>
-            <SwiperComponent></SwiperComponent>
-          </div>
         </div>
       </div>
     </>
