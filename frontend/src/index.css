@@ -17,16 +17,6 @@ body {
   min-height: 100vh;
 }
 
-html {
-  overflow-y: scroll;
-  scrollbar-width: none;
-}
-
-body::-webkit-scrollbar {
-  width: 0;
-  background: transparent;
-}
-
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;

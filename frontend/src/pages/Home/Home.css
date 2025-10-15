@@ -2,15 +2,24 @@
   box-sizing: border-box;
   width: 100%;
   display: flex;
+  align-items: center;
   margin-top: 40px;
   flex-direction: column;
+  min-width: 1800px;
+}
+
+.homeContent {
+  display: flex;
+  flex-direction: column;
+  width: 86%;
+  box-sizing: border-box;
 }
 
 .homeSectionTop {
   display: flex;
   width: 100%;
   box-sizing: border-box;
-  justify-content: space-evenly;  
+  justify-content: space-between;
   padding: 40px 0;
 }
 
@@ -49,6 +58,7 @@
   width: 100%;
   justify-content: space-between;
   align-items: center;
+  box-sizing: border-box;
 }
 
 .authHomeText {
@@ -75,20 +85,19 @@ h1 {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 164px;
-  height: 60px;
+  width: 184px;
+  height: 54px;
   padding: 0 10px;
   border-radius: 14px;
-  background-color: rgb(141, 123, 104);
   color: black;
   font-size: 15px;
-  font-weight: 600;
-  border: 1px solid black;
+  font-weight: 500;
+  background-color: #eedacb;
+  box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.1);
 }
 
 .loginGuestButton:hover {
-  background-color: rgb(120, 104, 88);
-  cursor: pointer;
+  background-color: rgb(200, 180, 160);
 }
 
 .loginGuestButton:active {
@@ -107,7 +116,7 @@ h1 {
 .topSwiper {
   display: flex;
   flex-direction: column;
-  width: 100%; 
+  width: 100%;
 }
 
 .bottomSwiper {
