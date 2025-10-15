@@ -27,9 +27,9 @@ function SignUp() {
             <input type="text" id="username" name="username" />
             <label htmlFor="password">Contraseña:</label>
             <span className='signInfo'>Mínimo 6 caracteres.</span>
-            <input type="password" id="password" name="password" />
+            <input type="password" id="password" name="password" autoComplete="new-password"  />
             <label htmlFor="confirm-password">Confirmar Contraseña:</label>
-            <input type="password" id="confirm-password" name="confirm-password" />
+            <input type="password" id="confirm-password" name="confirm-password" autoComplete="new-password" />
             <button className='buttonSign' type="submit">Registrarse</button>
             <Link to="/login" className="login-link">¿Ya estás registrado? Inicia sesión.</Link>
           </form>

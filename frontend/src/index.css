@@ -1,5 +1,4 @@
 :root {
-  font-family: 'Roboto', sans-serif;
   line-height: 1.5;
   font-weight: 400;
   color-scheme: light dark;
@@ -15,6 +14,17 @@ body {
   display: flex;
   min-width: 320px;
   min-height: 100vh;
+}
+
+html{
+  font-family: 'Poppins', sans-serif;
+}
+
+input,
+a,
+button,
+form {
+  font-family: 'Poppins', sans-serif;
 }
 
 @media (prefers-color-scheme: light) {

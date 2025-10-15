@@ -67,13 +67,14 @@
 
 h1 {
   margin: 0;
-  font-size: 3em;
+  text-align: justify;
+  font-size: 2.6em;
   line-height: 1.1;
-  text-align: start;
 }
 
 .authHomeText h2 {
   text-align: start;
+  font-size: 20px;
 }
 
 .buttonsContainer {
