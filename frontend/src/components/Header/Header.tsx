@@ -8,9 +8,9 @@ function Header() {
       <nav className='navbar'>
         <div className="navContent">
           <div className="logoContainer">
-            <a className='logoLink' href="/">
+            <Link className='logoLink' to="/">
               <img alt="AD" className="logoImg" src="/img/logo.png" />
-            </a>
+            </Link>
           </div>
           <div className='navItemsContainer'>
             <ul className='navList'>
