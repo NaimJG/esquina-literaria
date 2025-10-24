@@ -2,6 +2,8 @@ const express = require("express");
 const dotenv = require("dotenv");
 const cors = require("cors");
 const connectDB = require("./config/db");
+const userRoutes = require('./routes/user-routes');
+const authRoutes = require('./routes/auth-routes');
 
 dotenv.config();
 connectDB();
@@ -16,6 +18,9 @@ app.use(express.json());
 app.get("/", (req, res) => {
   res.send("API funcionando 🚀");
 });
+
+app.use('/users', userRoutes);
+app.use('/auth', authRoutes);
 
 // Conexión a MongoDB
 const PORT = process.env.PORT || 5000;
