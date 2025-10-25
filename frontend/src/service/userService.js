@@ -1,4 +1,4 @@
-const SERVER_URL = "http://localhost:5000";
+const SERVER_URL = "http://localhost:3000";
 
 const userService = {
     registerUser: async (userData) => {

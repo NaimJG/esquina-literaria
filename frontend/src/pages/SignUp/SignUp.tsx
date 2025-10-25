@@ -44,7 +44,7 @@ function SignUp() {
     try {
       await userService.registerUser(userData);
       alert('¡Registro exitoso!');
-      navigate('/login');
+      navigate('/home');
     } catch (error) {
       console.error("Error en el registro:", error);
       alert("Hubo un error durante el registro.");
