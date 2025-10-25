@@ -1,0 +1,20 @@
+.right-sidebar {
+  box-sizing: border-box;
+  background: rgba(255, 255, 255, 0.04);
+  border-left: 20px solid #916f5b;
+  padding: 16px;
+  color: inherit;
+}
+
+.right-sidebar.fixed {
+  position: fixed;
+  right: 0;
+  height: 100vh;
+  overflow-y: auto;
+}
+
+.right-sidebar .right-sidebar-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}

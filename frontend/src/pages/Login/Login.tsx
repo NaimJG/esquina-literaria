@@ -62,7 +62,7 @@ function Login() {
       setTimeout(() => {
         navigate('/home');
         setLoading(false);
-      }, 2000);
+      }, 1000);
     } catch (error) {
       const message = error instanceof Error ? error.message : String(error);
       console.error('Error durante el inicio de sesión:', message);
