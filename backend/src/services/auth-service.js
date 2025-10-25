@@ -1,9 +1,8 @@
-const { compare } = require("bcryptjs");
+const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const User = require("../models/User");
 
 const login = async (username, password) => {
-  // Buscar usuario
   const user = await User.findOne({ username });
   if (!user) {
     const error = new Error("Usuario o contraseña incorrectos");
@@ -11,22 +10,19 @@ const login = async (username, password) => {
     throw error;
   }
 
-  // Comparar contraseñas
-  const isMatch = await compare(password, user.password);
+  const isMatch = await bcrypt.compare(password, user.password);
   if (!isMatch) {
     const error = new Error("Usuario o contraseña incorrectos");
     error.status = 401;
     throw error;
   }
 
-  // Generar token JWT
   const token = jwt.sign(
     { id: user._id, username: user.username, role: user.role },
     process.env.JWT_SECRET,
     { expiresIn: "2h" }
   );
 
-  // Preparar respuesta
   const userResponse = user.toObject();
   delete userResponse.password;
 

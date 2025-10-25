@@ -2,7 +2,7 @@ import { useState } from 'react';
 import './Login.css';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/useAuth';
-
+import userService from '../../service/userService';
 
 function Login() {
 
@@ -36,24 +36,7 @@ function Login() {
 
     setLoading(true);
     try {
-      const response = await fetch("http://localhost:3000/auth/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ username: formData.username, password: formData.password }),
-      });
-
-      const data = await response.json();
-
-      if (!response.ok || data.error) {
-        setTimeout(() => {
-          console.log('Usuario o contraseña incorrecta');
-          // showAlert('Usuario o contraseña incorrecta', 'error');
-          setLoading(false);
-        }, 1000);
-        return;
-      }
+      const data = await userService.loginUser(formData);
 
       console.log('Login response:', data);
       login(data.user);
@@ -66,7 +49,7 @@ function Login() {
     } catch (error) {
       const message = error instanceof Error ? error.message : String(error);
       console.error('Error durante el inicio de sesión:', message);
-      // showAlert(message || 'Error al iniciar sesión', 'error');
+      alert(message);
       setLoading(false);
     }
   };

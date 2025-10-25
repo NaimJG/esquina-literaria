@@ -1,4 +1,4 @@
-const SERVER_URL = "http://localhost:3000";
+const SERVER_URL = "http://localhost:5000";
 
 const userService = {
     registerUser: async (userData) => {
@@ -19,6 +19,24 @@ const userService = {
         }
 
         return response.json();
+    },
+
+    loginUser: async (credentials) => {
+        const response = await fetch(`${SERVER_URL}/auth/login`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(credentials),
+        });
+
+        const data = await response.json();
+
+        if (!response.ok || data.error) {
+            throw new Error(data.message || 'Usuario o contraseña incorrecta');
+        }
+
+        return data;
     },
 }
 

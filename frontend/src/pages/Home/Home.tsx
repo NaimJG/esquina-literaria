@@ -14,7 +14,7 @@ function Home() {
             </section>
             <section className="homeSectionTopRight">
               <div className='authHomeContainer'>
-                <h1>Bienvenido a la Esquina Literaria, el lugar donde converge la literarura.</h1>
+                <h1>Bienvenido a la Esquina Literaria, el lugar donde converge la literatura.</h1>
                 <br></br>
                 <div className='authHomeContent'>
                   <div className='authHomeText'>

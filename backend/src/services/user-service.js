@@ -2,7 +2,6 @@ const User = require("../models/User");
 const bcrypt = require("bcryptjs");
 
 const crearUsuario = async (email, username, password) => {
-  // Verificar si ya existe el usuario
   const existingUser = await User.findOne({ $or: [{ email }, { username }] });
 
   if (existingUser) {
@@ -20,7 +19,7 @@ const crearUsuario = async (email, username, password) => {
   const hashedPassword = await bcrypt.hash(password, salt);
 
   // Crear usuario
-  const user = new User({ email, username, password: hashedPassword, role: "user" });
+  const user = new User({ email, username, password: hashedPassword });
   await user.save();
 
   // Quitar el password del objeto de respuesta
