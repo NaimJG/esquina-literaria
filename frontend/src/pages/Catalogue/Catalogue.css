@@ -30,7 +30,7 @@
 }
 
 .asideComments{
-  width: 500px;
+  min-width: 240px;
   height: 100%;
   box-sizing: border-box;
 }
