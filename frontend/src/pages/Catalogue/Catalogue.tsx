@@ -8,7 +8,7 @@ import bookService from '../../service/bookService';
 //Proximamente desde el backend
 const filterOptions = {
     genre: ['Terror', 'Aventura', 'Misterio', 'Fantasía Oscura', 'Artes Marciales'],
-    author: ['Frank Herbert', 'George Orwell', 'Arthur Conan Doyle', 'Julio Verne', 'Kentaro Miura', 'Takehiko Inoue'],
+    author: ['Frank Herbert', 'George Orwell', 'J.R.R. Tolkien', 'Stephen King', 'Kentaro Miura', 'Takehiko Inoue'],
     category: ['Fantasía', 'Manga', 'Juvenil'],
 };
 
@@ -73,9 +73,9 @@ function Catalogue() {
             <section className='catalogueContainer'>
                 <aside className='catalogueAside'>
                     Filtrar libros
-                    <BookSidebar title="genre" items={filterOptions.genre} selectedItems={filters.genre} onFilterChange={handleFilterChange} />
-                    <BookSidebar title="author" items={filterOptions.author} selectedItems={filters.author} onFilterChange={handleFilterChange} />
-                    <BookSidebar title="category" items={filterOptions.category} selectedItems={filters.category} onFilterChange={handleFilterChange} />
+                    <BookSidebar title="genre" displayName="Género" items={filterOptions.genre} selectedItems={filters.genre} onFilterChange={handleFilterChange} />
+                    <BookSidebar title="author" displayName="Autor" items={filterOptions.author} selectedItems={filters.author} onFilterChange={handleFilterChange} />
+                    <BookSidebar title="category" displayName="Categoría" items={filterOptions.category} selectedItems={filters.category} onFilterChange={handleFilterChange} />
                 </aside>
                 <section className='catalogueMain'>
                     <Library books={filteredBooks} />
