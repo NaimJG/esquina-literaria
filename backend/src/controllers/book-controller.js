@@ -28,7 +28,7 @@ const getBooks = async (req, res) => {
 
 const getBookById = async (req, res) => {
   const { bookId } = req.params;
-  res.status(200).json({ message: `Endpoint to get book with id ${bookId}` });
+  res.status(200).json({ message: `${bookId}` });
 };
 
 module.exports = {

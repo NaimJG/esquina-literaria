@@ -20,12 +20,10 @@ app.get("/", (req, res) => {
   res.send("API funcionando 🚀");
 });
 
-// API Routes
 app.use('/users', userRoutes);
 app.use('/auth', authRoutes);
 app.use('/books', bookRoutes);
 
-// Conexión a MongoDB
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Servidor corriendo en puerto ${PORT}`));
 
