@@ -1,21 +1,32 @@
 .catalogueContainer {
   display: flex;
+  align-items: flex-start;
   width: 100%;  
+  overflow-y: scroll;
+  height: calc(100vh - 80px);
+  box-sizing: border-box;
+  margin: 2px 0;
+  padding: 40px 120px;
 }
 
 .catalogueAside{
-  height: 100%;
-  width: 500px;
-  
+  width: 240px;
   box-sizing: border-box;
+  position: absolute;
+  font-weight: 500;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 0 4px;
 }
 
 .catalogueMain {
   width: 100%;
   display: flex;
   justify-content: center;
-  padding: 40px 0px;
   box-sizing: border-box;
+  margin-left: 240px;
+  padding: 38px 0;
 }
 
 .asideComments{

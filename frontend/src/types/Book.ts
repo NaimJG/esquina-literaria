@@ -1,11 +1,16 @@
 export interface Book {
-  id: number;
-  titulo: string;
-  genero: string;
-  año: number;
-  tipo: string;
+  id: string;
+  title: string;
+  synopsis: string;
+  genre: string;
+  category: string;
+  author: string;
+  score: number;
+  cover: string;
 }
 
 export interface BookCardProps {
   libro: Book;
 }
+
+export type BookFilter = Pick<Book, 'genre' | 'category' | 'author'>;

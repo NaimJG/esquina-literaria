@@ -4,6 +4,7 @@ const cors = require("cors");
 const connectDB = require("./src/config/db");
 const userRoutes = require('./src/routes/user-routes');
 const authRoutes = require('./src/routes/auth-routes');
+const bookRoutes = require('./src/routes/book-routes');
 
 dotenv.config();
 connectDB();
@@ -19,8 +20,10 @@ app.get("/", (req, res) => {
   res.send("API funcionando 🚀");
 });
 
+// API Routes
 app.use('/users', userRoutes);
 app.use('/auth', authRoutes);
+app.use('/books', bookRoutes);
 
 // Conexión a MongoDB
 const PORT = process.env.PORT || 5000;
