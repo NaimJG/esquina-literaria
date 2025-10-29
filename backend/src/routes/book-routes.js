@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const bookController = require('../controllers/book-controller');
-const reviewRoutes = require('./review-routes'); // Import review routes
+// const reviewRoutes = require('./review-routes'); // Import review routes
 
 // POST - Crear un nuevo libro.
 router.post('/', bookController.createBook);
@@ -13,6 +13,6 @@ router.get('/', bookController.getBooks);
 router.get('/:bookId', bookController.getBookById);
 
 // Llamado a las rutas para cargar reseñas a un libro.
-router.use('/:bookId/reviews', reviewRoutes);
+// router.use('/:bookId/reviews', reviewRoutes);
 
 module.exports = router;
