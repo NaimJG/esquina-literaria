@@ -3,7 +3,6 @@
   width: 100%;
   display: flex;
   align-items: center;
-  margin-top: 40px;
   flex-direction: column;
   min-width: 1800px;
 }
@@ -18,6 +17,7 @@
 .homeSectionTop {
   display: flex;
   width: 100%;
+  height: 100%;
   box-sizing: border-box;
   justify-content: space-between;
   padding: 40px 0;
@@ -32,7 +32,7 @@
 }
 
 .homeImg {
-  height: 700px;
+  height: 770px;
 }
 
 .homeSectionTopRight {
