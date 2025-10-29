@@ -8,6 +8,7 @@ import Store from './pages/Store/Store'
 import SignUp from './pages/SignUp/SignUp'
 import Login from './pages/Login/Login'
 import Profile from './pages/Profile/Profile'
+import BookDetail from './pages/BookDetail/BookDetail'
 
 function App() {
   return (
@@ -24,6 +25,8 @@ function App() {
           <Route path='/signup' element={<SignUp />} />
           <Route path='/login' element={<Login />} />
           <Route path='/profile' element={<Profile />} />
+          <Route path='/books/:id' element={<BookDetail />} />
+          
         </Routes>
       </main>
     </>

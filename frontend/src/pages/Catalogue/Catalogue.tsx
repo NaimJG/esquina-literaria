@@ -78,7 +78,9 @@ function Catalogue() {
                     <BookSidebar title="category" displayName="Categoría" items={filterOptions.category} selectedItems={filters.category} onFilterChange={handleFilterChange} />
                 </aside>
                 <section className='catalogueMain'>
+                    <div className='books'>
                     <Library books={filteredBooks} />
+                    </div>
                 </section>
                 <aside className='asideComments'>
                     Comentarios

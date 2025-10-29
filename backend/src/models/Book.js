@@ -8,6 +8,9 @@ const bookSchema = new mongoose.Schema({
     author: { type: String, required: true },
     cover: { type: String, required: false },
     reviews: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Review' }]
+}, {
+    toJSON: { virtuals: true },
+    toObject: { virtuals: true }
 });
 
 bookSchema.virtual('averageScore').get(function() {

@@ -8,11 +8,11 @@ interface LibraryProps {
 
 function Library({ books }: LibraryProps) {
   return (
-    <div className="lista-libros">
+    <>
       {books.map(libro => (
         <BookCard key={libro.id} libro={libro} />
       ))}
-    </div>
+    </>
   );
 }
 

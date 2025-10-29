@@ -4,7 +4,6 @@ import { Link, NavLink } from 'react-router-dom';
 import { useAuth } from '../../context/useAuth';
 import Avatar from "@mui/material/Avatar";
 import { Tooltip } from "@mui/material";
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { useLocation } from "react-router-dom";
 
 function Header() {
@@ -63,11 +62,11 @@ function Header() {
               {user ? (
                 <>
                   <ul className='navList navCart' style={{ alignItems: 'center' }}>
-                    <li className="cartContainer">
+{/*                     <li className="cartContainer">
                       <Tooltip title="Carrito">
                         <ShoppingCartIcon></ShoppingCartIcon>
                       </Tooltip>
-                    </li>
+                    </li> */}
                     <li>
                       <Tooltip title="Ver Perfil">
                         <NavLink to="/profile">
