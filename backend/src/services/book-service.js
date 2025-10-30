@@ -25,7 +25,13 @@ const createBook = async (bookData) => {
 };
 
 const getAllBooks = async () => {
-  const books = await Book.find().populate('reviews');
+  const books = await Book.find().populate({
+    path: 'reviews',
+    populate: {
+      path: 'user',
+      select: 'username'
+    }
+  });
 
   if (!books) {
     const error = new Error("No se encontraron libros.");
@@ -48,7 +54,13 @@ const getAllBooks = async () => {
 };
 
 const getBookById = async (bookId) => {
-  const book = await Book.findById(bookId).populate('reviews');
+  const book = await Book.findById(bookId).populate({
+    path: 'reviews',
+    populate: {
+      path: 'user',
+      select: 'username'
+    }
+  });
   
   if (!book) {
     const error = new Error("No se encontró un libro con ese ID.");
@@ -65,6 +77,7 @@ const getBookById = async (bookId) => {
     genre: book.genre ? book.genre : 'N/A',
     score: book.averageScore || 0,
     cover: book.cover || 'N/A',
+    reviews: book.reviews
   });
 
   return formattedBook;
