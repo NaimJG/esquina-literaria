@@ -41,6 +41,9 @@ function BookDetail() {
 
     const errorUser = () => {
         setShowUserAlert(true);
+        setTimeout(() => {
+           setShowUserAlert(false); 
+        }, 3000);
     }
 
     const getBook = useCallback(async () => {
