@@ -2,8 +2,17 @@
 import './Home.css'
 import SwiperComponent from '../../components/SwiperComponent/SwiperComponent'
 import { Link } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
+import Login from '../Login/Login'
+import SignUp from '../SignUp/SignUp'
 
 function Home() {
+  const location = useLocation()
+  const navState = (location.state as { showLogin?: boolean; showRegister?: boolean } | null) ?? null
+  const showLogin = !!navState?.showLogin
+  const showRegister = !!navState?.showRegister
+  console.log({ showLogin, showRegister })
+
   return (
     <>
       <div className='homeContainer'>
@@ -13,6 +22,12 @@ function Home() {
               <img className='homeImg' alt='homeImg' src='/img/ilustracion-chica-leyendo.jpg'></img>
             </section>
             <section className="homeSectionTopRight">
+              {showLogin ? (
+                <Login />
+              ) : showRegister ? (
+                <SignUp />
+              ) : (
+              <> 
               <div className='authHomeContainer'>
                 <h1>Bienvenido a la Esquina Literaria, el lugar donde converge la literatura.</h1>
                 <br></br>
@@ -31,6 +46,7 @@ function Home() {
                 <h3>Lo más leído de la semana</h3>
                 <SwiperComponent></SwiperComponent>
               </div>
+              </>)}
             </section>
           </div>
         </div>

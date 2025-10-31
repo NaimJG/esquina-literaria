@@ -9,7 +9,7 @@ export interface Book {
   author: string;
   score: number;
   cover: string;
-  reviews?: Review[]; // 👈 opcional
+  reviews: Review[];
 }
 
 export interface BookCardProps {

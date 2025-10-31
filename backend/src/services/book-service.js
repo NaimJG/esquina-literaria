@@ -25,7 +25,13 @@ const createBook = async (bookData) => {
 };
 
 const getAllBooks = async () => {
-  const books = await Book.find()
+  const books = await Book.find().populate({
+    path: 'reviews',
+    populate: {
+      path: 'user',
+      select: 'username'
+    }
+  });
 
   if (!books) {
     const error = new Error("No se encontraron libros.");
@@ -47,4 +53,34 @@ const getAllBooks = async () => {
   return formattedBooks;
 };
 
-module.exports = { createBook, getAllBooks };
+const getBookById = async (bookId) => {
+  const book = await Book.findById(bookId).populate({
+    path: 'reviews',
+    populate: {
+      path: 'user',
+      select: 'username'
+    }
+  });
+  
+  if (!book) {
+    const error = new Error("No se encontró un libro con ese ID.");
+    error.status = 404;
+    throw error;
+  }
+
+  const formattedBook = ({
+    id: book._id,
+    title: book.title,
+    synopsis: book.synopsis || 'N/A',
+    author: book.author ? book.author : 'N/A',
+    category: book.category ? book.category : 'N/A',
+    genre: book.genre ? book.genre : 'N/A',
+    score: book.averageScore || 0,
+    cover: book.cover || 'N/A',
+    reviews: book.reviews
+  });
+
+  return formattedBook;
+};
+
+module.exports = { createBook, getAllBooks, getBookById };

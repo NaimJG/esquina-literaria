@@ -5,13 +5,6 @@ import Library from '../../components/Library/Library';
 import type { Book, BookFilter } from '../../types/Book';
 import bookService from '../../service/bookService';
 
-//Proximamente desde el backend
-const filterOptions = {
-    genre: ['Terror', 'Aventura', 'Misterio', 'Fantasía Oscura', 'Artes Marciales'],
-    author: ['Frank Herbert', 'George Orwell', 'J.R.R. Tolkien', 'Stephen King', 'Kentaro Miura', 'Takehiko Inoue'],
-    category: ['Fantasía', 'Manga', 'Juvenil'],
-};
-
 type ActiveFilters = {
     [K in keyof BookFilter]: string[];
 };
@@ -20,6 +13,51 @@ function Catalogue() {
     const [allBooks, setAllBooks] = useState<Book[]>([]);
     const [filteredBooks, setFilteredBooks] = useState<Book[]>([]);
     const [filters, setFilters] = useState<ActiveFilters>({ genre: [], author: [], category: [] });
+    const [categories, setCategories] = useState<string[]>([]);
+    const [genres, setGenres] = useState<string[]>([]);
+    const [authors, setAuthors] = useState<string[]>([]);
+
+    useEffect(() => {
+        const getCategories = async () => {
+            try {
+                const categoriesData = await bookService.getCategories();
+                const categoryNames = categoriesData.map((category: { name: string }) => category.name);
+                setCategories(categoryNames);
+            } catch (error) {
+                console.error("Error al obtener las categorías.", error);
+            }
+        };
+        getCategories();
+
+    }, [])
+
+     useEffect(() => {
+        const getGenres = async () => {
+            try {
+                const genresData = await bookService.getGenres();
+                const genreNames = genresData.map((genre: { name: string }) => genre.name);
+                setGenres(genreNames);
+            } catch (error) {
+                console.error("Error al obtener los géneros.", error);
+            }
+        };
+        getGenres();
+
+    }, [])
+
+       useEffect(() => {
+        const getAuthors = async () => {
+            try {
+                const authorsData = await bookService.getAuthors();
+                const authorNames = authorsData.map((author: { name: string }) => author.name);
+                setAuthors(authorNames);
+            } catch (error) {
+                console.error("Error al obtener los géneros.", error);
+            }
+        };
+        getAuthors();
+
+    }, [])
 
     useEffect(() => {
         const getBooks = async () => {
@@ -73,12 +111,14 @@ function Catalogue() {
             <section className='catalogueContainer'>
                 <aside className='catalogueAside'>
                     Filtrar libros
-                    <BookSidebar title="genre" displayName="Género" items={filterOptions.genre} selectedItems={filters.genre} onFilterChange={handleFilterChange} />
-                    <BookSidebar title="author" displayName="Autor" items={filterOptions.author} selectedItems={filters.author} onFilterChange={handleFilterChange} />
-                    <BookSidebar title="category" displayName="Categoría" items={filterOptions.category} selectedItems={filters.category} onFilterChange={handleFilterChange} />
+                    <BookSidebar title="genre" displayName="Género" items={genres} selectedItems={filters.genre} onFilterChange={handleFilterChange} />
+                    <BookSidebar title="author" displayName="Autor" items={authors} selectedItems={filters.author} onFilterChange={handleFilterChange} />
+                    <BookSidebar title="category" displayName="Categoría" items={categories} selectedItems={filters.category} onFilterChange={handleFilterChange} />
                 </aside>
                 <section className='catalogueMain'>
-                    <Library books={filteredBooks} />
+                    <div className='books'>
+                        <Library books={filteredBooks} />
+                    </div>
                 </section>
                 <aside className='asideComments'>
                     Comentarios

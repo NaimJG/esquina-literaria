@@ -1,0 +1,130 @@
+.book-detail-container {
+    padding: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    box-sizing: border-box;
+    margin-top: 1px;
+    overflow-y: scroll;
+    height: calc(100vh - 80px);
+}
+
+.book-detail-card {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    max-width: 900px;
+    width: 100%;
+}
+
+.book-detail-header {
+    display: flex;
+    justify-content: flex-start;
+    text-align: left;
+    gap: 30px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+.book-detail-cover {
+    width: 280px;
+    height: 380px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.book-detail-info{
+    width: 100%;
+    position: relative;
+}
+
+.book-detail-info h1 {
+    font-size: 2.5rem;
+    margin: 0 0 10px 0;
+}
+
+.book-detail-info h2 {
+    font-size: 1.5rem;
+    font-weight: 400;
+    color: #555;
+    margin: 0 0 20px 0;
+}
+
+.book-detail-info p {
+    font-size: 1rem;
+    color: #333;
+    margin: 5px 0;
+}
+
+.book-detail-body {
+    margin-bottom: 20px;
+}
+
+.book-detail-synopsis {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #444;
+    text-align: justify;
+}
+
+.book-detail-reviews{
+    
+    
+}
+
+.book-detail-reviews h3 {
+    font-size: 1.5rem;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+}
+
+.loading, .error, .no-book {
+    text-align: center;
+    font-size: 1.2rem;
+    padding: 50px;
+}
+
+.bookreview-container{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    box-sizing: border-box;
+    justify-content: flex-start;
+    h4{
+        margin: 10px 0;
+        border-bottom: 1px solid #00000050;
+        width: 100%;
+        text-align: left;
+    }
+}
+
+.review-content{
+    display: flex;
+    font-size: 14px;
+    width: 100%;
+    flex-direction: column;
+    align-items: flex-start;
+    border: 1px solid #00000030;   
+    border-radius: 8px;
+    padding: 20px 20px;
+    box-sizing: border-box;
+    margin-bottom: 6px;
+}
+
+.score-general{
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    position: absolute;
+    bottom: 20px;
+
+    h3{
+        margin: 0;
+    }
+}

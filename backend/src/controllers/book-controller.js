@@ -27,8 +27,16 @@ const getBooks = async (req, res) => {
 };
 
 const getBookById = async (req, res) => {
-  const { bookId } = req.params;
-  res.status(200).json({ message: `${bookId}` });
+  try {
+    const book = await bookService.getBookById(req.params.bookId);
+    res.status(200).json({ book });
+  } catch (err) {
+    const statusCode = err.status || 500;
+    res.status(statusCode).json({
+      error: "No se pudo obtener el libro",
+      message: err.message,
+    }); 
+  }
 };
 
 module.exports = {

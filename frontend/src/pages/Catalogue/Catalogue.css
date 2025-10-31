@@ -23,10 +23,15 @@
 .catalogueMain {
   width: 100%;
   display: flex;
-  justify-content: center;
   box-sizing: border-box;
   margin-left: 240px;
-  padding: 38px 0;
+  max-height: 800px;
+}
+
+.books{
+  display: flex;
+  padding: 0 40px;
+  gap: 20px;
 }
 
 .asideComments{
