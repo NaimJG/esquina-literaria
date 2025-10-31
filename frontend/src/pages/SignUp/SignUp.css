@@ -3,6 +3,7 @@
   height: 100%;
   justify-content: center;
   font-family: 'Roboto', sans-serif;
+  padding-top: 25px;
 }
 
 #root{
@@ -25,7 +26,7 @@
   align-items: center;
 
   img {
-    width: 80px;
+    width: 100px;
   }
 
   h4 {

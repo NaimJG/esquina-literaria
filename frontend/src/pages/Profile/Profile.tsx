@@ -9,7 +9,7 @@ import bookService from '../../service/bookService';
 
 function Profile() {
   const navigate = useNavigate();
-  const { logout } = useAuth();
+  const { user, logout } = useAuth();
   const [books, setBooks] = useState<Book[]>([]);
   const [selectedBook, setSelectedBook] = useState<Book | null>(null);
   const [reviewText, setReviewText] = useState("");
@@ -58,9 +58,15 @@ function Profile() {
       return;
     }
 
+    if (!user) {
+      setMessage("Debes estar logueado para publicar una reseña.");
+      return;
+    }
+
     const review: Review = {
       content: reviewText.trim(),
       score: score,
+      user: { id: user.id, username: user.username },
       date: new Date().toISOString(),
     };
 
