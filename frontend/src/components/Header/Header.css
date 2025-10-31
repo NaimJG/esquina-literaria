@@ -37,11 +37,12 @@
   align-items: center;
   width: 100%;
   box-sizing: border-box;
-  justify-content: space-between;
+  justify-content: end;
 }
 
 .cartContainer{
   display: flex;  
+  align-self: center;
 }
 
 .navList {

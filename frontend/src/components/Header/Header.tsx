@@ -43,24 +43,22 @@ function Header() {
       <nav className='navbar'>
         <div className="navContent">
           <div className="logoContainer">
-            <Link className='logoLink' to="/">
+            <div className='logoLink'>
               <img alt="AD" className="logoImg" src="/img/logo.png" />
-            </Link>
+            </div>
           </div>
           <div className='navItemsContainer'>
-            <ul className='navList'>
-              <li><NavLink to="/home" className={({ isActive }) => isActive ? 'nav-active' : 'nav-li'}>Explorar</NavLink></li>
-            </ul>
             <div className="authButtons">
               {user ? (
                 <>
-                  <ul className='navList navCart' style={{ alignItems: 'center' }}>
+                  <ul className='navList navCart'>
+                    <li><NavLink to="/home" className={({ isActive }) => isActive ? 'nav-active' : 'nav-li'}>Explorar</NavLink></li>
                     <li className="cartContainer">
                       <Tooltip title="Carrito">
                         <ShoppingCartIcon></ShoppingCartIcon>
                       </Tooltip>
                     </li>
-                    <li>
+                    <li style={{ alignSelf: 'center' }}>
                       <Tooltip title="Ver Perfil">
                         <NavLink to="/profile">
                           <Avatar {...stringAvatar(user.username)} />

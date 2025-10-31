@@ -51,6 +51,12 @@ function SignUp() {
     }
   };
 
+  const handleGuestAccess = () => {
+    console.log('Acceso como invitado');
+    navigate('/home');
+  };
+
+
   return (
     <>
       <div className="SignUp-component">
@@ -79,6 +85,7 @@ function SignUp() {
             <input type="password" id="confirm-password" name="confirm-password" value={confirmPassword} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setConfirmPassword(e.target.value)} autoComplete="new-password" required />
             
             <button className='buttonSign' type="submit">Registrarse</button>
+            <button className="guestButton" type="button" onClick={handleGuestAccess}>¡Explora como invitado!</button>
             <Link to="/login" className="login-link">¿Ya estás registrado? Inicia sesión.</Link>
           </form>
         </div>

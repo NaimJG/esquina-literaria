@@ -17,13 +17,18 @@ function Login() {
   //   setTimeout(() => setAlert({ show: false, message: "", type: "" }), 3000);
   // };
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-      const { name, value } = e.target;
-      setFormData(prevState => ({
-        ...prevState,
-        [name]: value
-      }));
-    };
+  const handleGuestAccess = () => {
+    console.log('Acceso como invitado');
+    navigate('/home');
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData(prevState => ({
+      ...prevState,
+      [name]: value
+    }));
+  };
 
   const handleSubmit = async (e: { preventDefault: () => void; }) => {
     e.preventDefault();
@@ -68,6 +73,7 @@ function Login() {
             <label htmlFor="password">Contraseña:</label>
             <input type="password" id="password" name="password" value={formData.password} onChange={handleChange} autoComplete='off' required/>
             <button className='buttonSign' type="submit" disabled={loading}>{loading ? 'Ingresando...' : 'Iniciar Sesión'}</button>
+            <button className="guestButton" type="button" onClick={handleGuestAccess}>¡Explora como invitado!</button>
             <Link to="/signup" className="login-link">¿No estás registrado?</Link>
             <Link to="/forgot" className="login-link">¿Olvidaste tu contraseña?</Link>
           </form>

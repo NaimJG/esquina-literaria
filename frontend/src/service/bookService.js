@@ -14,6 +14,17 @@ const bookService = {
         
         return data.books;
     },
+    
+    addReview: async (bookId, review) => {
+        const response = await fetch(`${SERVER_URL}/reviews/${bookId}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(review),
+        });
+
+        if (!response.ok) throw new Error("Error al guardar reseña");
+        return await response.json();
+    },
 }
 
 export default bookService;
