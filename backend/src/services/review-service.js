@@ -50,4 +50,9 @@ const getReviewsForBook = async (bookId) => {
   return reviews;
 };
 
-module.exports = { createReview, getReviewsForBook };
+const getSortedReviews = async () => {
+  const reviews = await Review.find({}).sort({ scoreDate: -1, score: -1 }).populate('user', 'username');
+  return reviews;
+};
+
+module.exports = { createReview, getReviewsForBook, getSortedReviews };

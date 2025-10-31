@@ -33,7 +33,21 @@ const getReviewsForBook = async (req, res) => {
   }
 };
 
+const getSortedReviews = async (req, res) => {
+  try {
+    const reviews = await reviewService.getSortedReviews();
+    res.status(200).json(reviews);
+  } catch (err) {
+    const statusCode = err.status || 500;
+    res.status(statusCode).json({
+      error: "No se pudieron obtener las reseñas ordenadas",
+      message: err.message,
+    });
+  }
+};
+
 module.exports = {
   createReview,
   getReviewsForBook,
+  getSortedReviews,
 };
