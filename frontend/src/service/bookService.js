@@ -8,10 +8,10 @@ const bookService = {
             const errorData = await response.json();
             throw new Error(errorData.message || "Error al obtener los libros.");
         }
-        
+
         const data = await response.json();
         console.log(data);
-        
+
         return data.books;
     },
 
@@ -22,11 +22,49 @@ const bookService = {
             const errorData = await response.json();
             throw new Error(errorData.message || "Error al obtener el libro.");
         }
-        
+
         const data = await response.json();
         console.log(data);
-        
+
         return data.book;
+    },
+
+    getCategories: async () => {
+        const response = await fetch(`${SERVER_URL}/categories`);
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.message || "Error al obtener las categorias.");
+        }
+
+        const data = await response.json();
+        console.log(data);
+
+        return data;
+    },
+
+    getGenres: async () => {
+        const response = await fetch(`${SERVER_URL}/genres`);
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.message || "Error al obtener las categorias.");
+        }
+
+        const data = await response.json();
+        return data;
+    },
+
+    getAuthors: async () => {
+        const response = await fetch(`${SERVER_URL}/authors`);
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.message || "Error al obtener las categorias.");
+        }
+
+        const data = await response.json();
+        return data;
     },
 }
 
