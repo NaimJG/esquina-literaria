@@ -1,4 +1,3 @@
-import RightSidebar from '../../components/RightSidebar/RightSidebar';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/useAuth';
 import './Profile.css';
@@ -12,6 +11,8 @@ function Profile() {
   const { user, logout } = useAuth();
   const [books, setBooks] = useState<Book[]>([]);
   const [selectedBook, setSelectedBook] = useState<Book | null>(null);
+  const [searchBook, setSearchBook] = useState("");
+  const [showSuggestions, setShowSuggestions] = useState(false);
   const [reviewText, setReviewText] = useState("");
   const [score, setScore] = useState<number>(0);
   const [loading, setLoading] = useState(false);
@@ -45,10 +46,10 @@ function Profile() {
     fetchBooks();
   }, []);
 
-  const handleSelectBook = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const bookId = e.target.value;
-    const book = books.find((b) => b.id === bookId) || null;
+  const handleSelectBook = (book: Book) => {
     setSelectedBook(book);
+    setSearchBook(book.title + " – " + book.author);
+    setShowSuggestions(false);
     setMessage("");
   };
 
@@ -96,15 +97,45 @@ function Profile() {
 
         {showReviewForm && (
           <div className="review-form-container">
-            <label htmlFor="bookSelect">Seleccioná un libro:</label>
-              <select id="bookSelect" name="bookSelect" onChange={handleSelectBook} value={selectedBook?.id || ""}>
-            <option value="">-- Elegí un libro --</option>
-            {books.map((book) => (
-              <option key={book.id} value={book.id}>
-                {book.title} – {book.author}
-              </option>
-            ))}
-          </select>
+            <label htmlFor="bookSearch">Seleccioná un libro:</label>
+            <input
+              id="bookSearch"
+              name="bookSearch"
+              type="text"
+              autoComplete="off"
+              placeholder="Buscar por título o autor..."
+              value={searchBook}
+              onChange={e => {
+                setSearchBook(e.target.value);
+                setShowSuggestions(true);
+                setSelectedBook(null);
+              }}
+              onFocus={() => setShowSuggestions(true)}
+              style={{ width: '100%', padding: '10px', borderRadius: '4px', fontSize: '16px', marginBottom: '8px', boxSizing: 'border-box' }}
+            />
+            {showSuggestions && searchBook.trim() && (
+              <ul className="book-suggestions">
+                {books.filter(b =>
+                  b.title.toLowerCase().includes(searchBook.toLowerCase()) ||
+                  b.author.toLowerCase().includes(searchBook.toLowerCase())
+                ).slice(0, 8).map(book => (
+                  <li
+                    key={book.id}
+                    onClick={() => handleSelectBook(book)}
+                    className={selectedBook?.id === book.id ? 'selected' : ''}
+                    style={{ cursor: 'pointer', padding: '8px', borderBottom: '1px solid #eee'}}
+                  >
+                    {book.title} – {book.author}
+                  </li>
+                ))}
+                {books.filter(b =>
+                  b.title.toLowerCase().includes(searchBook.toLowerCase()) ||
+                  b.author.toLowerCase().includes(searchBook.toLowerCase())
+                ).length === 0 && (
+                  <li style={{ padding: '8px', color: '#999' }}>No se encontraron libros</li>
+                )}
+              </ul>
+            )}
 
           {selectedBook && (
             <div className="book-preview">
@@ -153,22 +184,20 @@ function Profile() {
           </div>
         )}
       </section>
-      <RightSidebar width="300px" topOffset="80px" fixed={true} className="right-sidebar">
-          <div style={{ padding: '8px' }}>
-            <h4 style={{ fontSize: '20px', textAlign: 'left', color: '#916f5b'}}>Ajustes</h4>
-            <ul className='profileSettingsList'>
-              <li><Link to="#">Cambiar color de mi página</Link></li>
-              <li><Link to="#">Cambiar icono del perfil</Link></li>
-              <li><Link to="#">Cambiar nombre de usuario</Link></li>
-              <li><Link to="#">Cambiar constraseña</Link></li>
-              <li>
-                <button onClick={handleLogout} className="logoutButton" style={{ background: 'transparent', border: 'none', color: 'red', fontWeight: 'bold', cursor: 'pointer' }}>
-                  Cerrar sesión
-                </button>
-              </li>
-            </ul>
-          </div>
-      </RightSidebar>
+      <aside className="right-sidebar">
+        <h4>Ajustes</h4>
+        <ul className='profileSettingsList'>
+          <li className='listElement'><Link to="#" >Cambiar color de mi página</Link></li>
+          <li className='listElement'><Link to="#">Cambiar icono del perfil</Link></li>
+          <li className='listElement'><Link to="#">Cambiar nombre de usuario</Link></li>
+          <li className='listElement'><Link to="#">Cambiar constraseña</Link></li>
+          <li className='listButton'>
+            <button onClick={handleLogout} className="logoutButton">
+              Cerrar sesión
+            </button>
+          </li>
+        </ul>
+      </aside>
     </>
   );
 }
