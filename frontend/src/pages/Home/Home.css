@@ -4,13 +4,12 @@
   display: flex;
   align-items: center;
   flex-direction: column;
-  min-width: 1800px;
+  margin-top: 80px;
 }
 
 .homeContent {
   display: flex;
   flex-direction: column;
-  width: 86%;
   box-sizing: border-box;
 }
 
@@ -20,7 +19,8 @@
   height: 100%;
   box-sizing: border-box;
   justify-content: space-between;
-  padding: 40px 0;
+  padding: 50px 0;
+  gap: 60px;
 }
 
 .homeSectionTopLeft {
@@ -32,7 +32,7 @@
 }
 
 .homeImg {
-  height: 770px;
+  height: 600px;
 }
 
 .homeSectionTopRight {

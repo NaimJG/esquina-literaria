@@ -6,6 +6,7 @@
   height: calc(100vh - 80px);
   box-sizing: border-box;
   margin: 2px 0;
+  margin-top: 80px;
   padding: 40px 120px;
 }
 

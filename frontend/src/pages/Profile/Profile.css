@@ -34,6 +34,7 @@
 }
 
 .profileContainer {
+  margin-top: 80px;
   padding: 24px;
   min-height: calc(100vh - 80px); /* altura total menos el header */
 }
@@ -232,39 +233,18 @@ textarea {
   color: #0e7c86;
 }
 
-/* Estilos responsive */
-@media (max-width: 1200px) {
-  .profileContainer {
-    margin-right: 0;
-    padding: 16px;
-  }
-
-  .book-preview {
-    grid-template-columns: 1fr;
-  }
-
-  .book-preview img {
-    width: 100%;
-    max-width: 200px;
-    margin: 0 auto;
-  }
-
-  .book-info {
-    grid-column: 1;
-  }
-}
-
 .right-sidebar {
+  margin-top: 80px;
   width: 300px;
   position: fixed;
   right: 0;
-  top: 80px;
+  top: 0;
   height: 100vh;
   padding: 8px;
   background: rgba(255,255,255,0.04);
   border-left: 4px solid #916f5b;
   overflow-y: auto;
-  z-index: 10;
+  z-index: 1;
 }
 
 .right-sidebar h4 {
@@ -329,4 +309,26 @@ textarea {
   cursor: pointer;
   text-align: left;
   padding: 0;
+}
+
+/* Estilos responsive */
+@media (max-width: 1200px) {
+  .profileContainer {
+    margin-right: 0;
+    padding: 16px;
+  }
+
+  .book-preview {
+    grid-template-columns: 1fr;
+  }
+
+  .book-preview img {
+    width: 100%;
+    max-width: 200px;
+    margin: 0 auto;
+  }
+
+  .book-info {
+    grid-column: 1;
+  }
 }
