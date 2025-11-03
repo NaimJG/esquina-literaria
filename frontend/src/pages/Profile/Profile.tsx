@@ -3,8 +3,10 @@ import { useAuth } from '../../context/useAuth';
 import './Profile.css';
 import { useState, useEffect } from 'react';
 import type { Book } from '../../types/Book';
-import type { Review } from '../../types/Review';
+import reviewService from '../../service/reviewService';
 import bookService from '../../service/bookService';
+import { Rating } from '@mui/material';
+import type { Review } from '../../types/Review';
 
 function Profile() {
   const navigate = useNavigate();
@@ -18,6 +20,11 @@ function Profile() {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
   const [showReviewForm, setShowReviewForm] = useState(false);
+  const [reviews, setReviews] = useState<Review[]>([]);
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+
+  const REVIEWS_PER_PAGE = 5;
 
   const handleLogout = () => {
     logout();
@@ -46,6 +53,22 @@ function Profile() {
     fetchBooks();
   }, []);
 
+  useEffect(() => {
+    if (user) fetchReviews(page);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user, page]);
+
+  const fetchReviews = async (pageNumber: number) => {
+    try {
+      const data = await reviewService.getReviewsByUser(user._id, pageNumber, REVIEWS_PER_PAGE);
+      console.log('Reviews: ', data)
+      setReviews(data.reviews);
+      setTotalPages(data.totalPages);
+    } catch (error) {
+      console.error('Error al cargar reseñas del usuario:', error);
+    }
+  };
+
   const handleSelectBook = (book: Book) => {
     setSelectedBook(book);
     setSearchBook(book.title + " – " + book.author);
@@ -64,20 +87,21 @@ function Profile() {
       return;
     }
 
-    const review: Review = {
-      content: reviewText.trim(),
-      score: score,
-      user: { id: user.id, username: user.username },
-      date: new Date().toISOString(),
-    };
-
-    setLoading(true);
     try {
-      await bookService.addReview(selectedBook.id, review);
+      setLoading(true);
+      await reviewService.createReview(selectedBook.id, {
+        score: score,
+        comment: reviewText.trim(),
+        userId: user._id,
+      });
+
       setMessage("✅ ¡Reseña publicada con éxito!");
       setReviewText("");
       setScore(0);
       setSelectedBook(null);
+
+      // Actualizar reseñas
+      fetchReviews(page);
     } catch (error) {
       console.error("Error al publicar reseña:", error);
       setMessage("❌ Ocurrió un error al publicar la reseña.");
@@ -85,6 +109,7 @@ function Profile() {
       setLoading(false);
     }
   };
+
   return (
     <>
       <section className="profileContainer">
@@ -150,16 +175,16 @@ function Profile() {
                 </div>
               </div>
 
-              <div className='score-input'>
-                <label htmlFor="scoreInput">Puntaje (1 a 5):</label>
-                <input
-                  id="scoreInput"
-                  name="score"
-                  type="number"
-                  min={1}
-                  max={5}
+              <div className="score-input">
+                <label htmlFor="scoreInput" style={{ marginBottom: '6px' }}>
+                  Puntaje:
+                </label>
+                <Rating
+                  name="scoreInput"
                   value={score}
-                  onChange={(e) => setScore(Number(e.target.value))}
+                  onChange={(event, newValue) => setScore(newValue || 0)}
+                  precision={1}
+                  size="large"
                 />
               </div>
               
@@ -183,6 +208,52 @@ function Profile() {
           {message && <p className="message">{message}</p>}
           </div>
         )}
+
+        {/* 🔹 Sección de reseñas */}
+        <section className="user-reviews-section">
+          <h3>Mis reseñas</h3>
+          {reviews.length === 0 ? (
+            <p>No has publicado ninguna reseña todavía.</p>
+          ) : (
+            <ul className="user-reviews-list">
+              {reviews.map((review: Review) => (
+                <div key={review._id} className="book-preview">
+                  <div className="book-cover-info">
+                    <img src={review.book?.cover || '/default-cover.jpg'} alt={review.book?.title} />
+                    <div className="book-info">
+                      <h4>{review.book?.title}</h4>
+                      <p><strong>Autor:</strong> {review.book?.author}</p>
+                      <p><strong>Género:</strong> {review.book?.genre}</p>
+                      <p><strong>Categoría:</strong> {review.book?.category}</p>
+                      <p>{review.book?.synopsis}</p>
+                    </div>
+                  </div>
+                  <div className="review-content">
+                    <p>⭐ {review.score}</p>
+                    <p>{review.comment}</p>
+                    <small>{new Date(review.scoreDate).toLocaleDateString('es-AR')}</small>
+                  </div>
+                </div>
+              ))}
+            </ul>
+          )}
+
+          {/* 🔹 Paginación */}
+          {totalPages > 1 && (
+            <div className="pagination">
+              <button disabled={page === 1} onClick={() => setPage(page - 1)}>
+                ◀ Anterior
+              </button>
+              <span>
+                Página {page} de {totalPages}
+              </span>
+              <button disabled={page === totalPages} onClick={() => setPage(page + 1)}>
+                Siguiente ▶
+              </button>
+            </div>
+          )}
+        </section>
+
         <aside className="right-sidebar">
           <h4>Ajustes</h4>
           <ul className='profileSettingsList'>

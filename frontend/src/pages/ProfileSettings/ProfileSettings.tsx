@@ -55,8 +55,11 @@ export default function ProfileSettings() {
       setUser(updatedUser);
       alert("Email actualizado correctamente ✅");
       setNewEmail('');
-    } catch (err: any) {
-      alert(err.message);
+    } catch (err) {
+      const message = err instanceof Error ? err.message : String(err);
+      console.error('Error al actualizar el email:', message);
+      alert(message);
+      setNewEmail('');
     }
   };
 
@@ -69,8 +72,11 @@ export default function ProfileSettings() {
       setUser(updatedUser);
       alert("Nombre de usuario actualizado correctamente ✅");
       setNewUsername('');
-    } catch (err: any) {
-      alert(err.message);
+    } catch (err) {
+      const message = err instanceof Error ? err.message : String(err);
+      console.error('Error al actualizar el nombre de usuario:', message);
+      alert(message);
+      setNewUsername('');
     }
   };
 
@@ -86,8 +92,12 @@ export default function ProfileSettings() {
       setPasswordMessage('Contraseña actualizada correctamente ✅');
       setCurrentPassword('');
       setNewPassword('');
-    } catch (err: any) {
-      setPasswordMessage(err.message);
+    } catch (err) {
+      const message = err instanceof Error ? err.message : String(err);
+      console.error('Error al actualizar la contraseña:', message);
+      alert(message);
+      setCurrentPassword('');
+      setNewPassword('');
     }
   };
 

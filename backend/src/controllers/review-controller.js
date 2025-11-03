@@ -46,8 +46,28 @@ const getSortedReviews = async (req, res) => {
   }
 };
 
+const getReviewsByUser = async (req, res) => {
+  try {
+    const { userId } = req.params;
+    const { page = 1, limit = 5 } = req.query;
+
+    const result = await reviewService.getReviewsByUser(userId, Number(page), Number(limit));
+
+    res.status(200).json({
+      success: true,
+      reviews: result.reviews,
+      totalPages: result.totalPages,
+      totalReviews: result.totalReviews,
+    });
+  } catch (error) {
+    console.error("Error al obtener reseñas del usuario:", error);
+    res.status(500).json({ message: "Error interno del servidor" });
+  }
+};
+
 module.exports = {
   createReview,
   getReviewsForBook,
   getSortedReviews,
+  getReviewsByUser
 };

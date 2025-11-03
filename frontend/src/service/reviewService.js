@@ -19,6 +19,19 @@ const reviewService = {
         
         return await response.json();
     },
+
+    async getReviewsByUser(userId, page = 1, limit = 5) {
+        try {
+            const response = await fetch(
+                `${SERVER_URL}/reviews/${userId}?page=${page}&limit=${limit}`
+            );
+            if (!response.ok) throw new Error("Error al obtener reseñas del usuario");
+            return await response.json();
+        } catch (error) {
+            console.error("Error en getReviewsByUser:", error);
+            throw error;
+        }
+    },
 };
 
 export default reviewService;

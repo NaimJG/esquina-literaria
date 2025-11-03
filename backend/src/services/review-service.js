@@ -55,4 +55,24 @@ const getSortedReviews = async () => {
   return reviews;
 };
 
-module.exports = { createReview, getReviewsForBook, getSortedReviews };
+const getReviewsByUser = async (userId, page = 1, limit = 5) => {
+  const skip = (page - 1) * limit;
+
+  const [reviews, total] = await Promise.all([
+    Review.find({ user: userId })
+      .populate('book', 'title author cover synopsis genre category score')
+      .sort({ scoreDate: -1 })
+      .skip(skip)
+      .limit(limit)
+      .lean(),
+    Review.countDocuments({ user: userId }),
+  ]);
+
+  return {
+    reviews,
+    totalPages: Math.ceil(total / limit) || 1,
+    totalReviews: total,
+  };
+};
+
+module.exports = { createReview, getReviewsForBook, getSortedReviews, getReviewsByUser };

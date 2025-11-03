@@ -11,4 +11,7 @@ router.post('/', reviewController.createReview);
 // GET /books/:bookId/reviews - Obtener reseñas de un libro por id.
 router.get('/', reviewController.getReviewsForBook);
 
+// GET /user/:userId/reviews Obtener reseñas de un usuario con paginación
+router.get("/:userId", reviewController.getReviewsByUser);
+
 module.exports = router;
