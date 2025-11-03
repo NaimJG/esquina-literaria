@@ -65,9 +65,31 @@ const getReviewsByUser = async (req, res) => {
   }
 };
 
+ const updateReview = async (req, res) => {
+  try {
+    const { reviewId } = req.params;
+    const updatedReview = await reviewService.updateReview(reviewId, req.body);
+    res.status(200).json(updatedReview);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+};
+
+ const deleteReview = async (req, res) => {
+  try {
+    const { reviewId } = req.params;
+    await reviewService.deleteReview(reviewId);
+    res.status(200).json({ message: "Reseña eliminada correctamente" });
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+};
+
 module.exports = {
   createReview,
   getReviewsForBook,
   getSortedReviews,
-  getReviewsByUser
+  getReviewsByUser,
+  updateReview,
+  deleteReview
 };

@@ -345,6 +345,58 @@ textarea {
   margin-top: 6px;
 }
 
+.review-actions {
+  margin-top: 8px;
+  display: flex;
+  gap: 10px;
+}
+
+.review-actions button {
+  background: #0e7c86;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.review-actions button:hover {
+  background: #0a5c63;
+}
+
+.review-actions .delete-btn {
+  background: #c0392b;
+}
+
+.review-actions .delete-btn:hover {
+  background: #a93226;
+}
+
+.edit-buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.edit-buttons button {
+  padding: 8px 16px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.edit-buttons button:first-child {
+  background: #0e7c86;
+  color: white;
+}
+
+.edit-buttons .cancel-btn {
+  background: #ccc;
+  color: #333;
+}
+
 .pagination {
   display: flex;
   justify-content: center;

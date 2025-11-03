@@ -23,6 +23,9 @@ function Profile() {
   const [reviews, setReviews] = useState<Review[]>([]);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  const [editingReview, setEditingReview] = useState<Review | null>(null);
+  const [editText, setEditText] = useState("");
+  const [editScore, setEditScore] = useState<number>(0);
 
   const REVIEWS_PER_PAGE = 5;
 
@@ -107,6 +110,56 @@ function Profile() {
       setMessage("❌ Ocurrió un error al publicar la reseña.");
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleEditClick = (review: Review) => {
+    setEditingReview(review);
+    setEditText(review.comment);
+    setEditScore(review.score);
+  };
+
+  const handleCancelEdit = () => {
+    setEditingReview(null);
+    setEditText("");
+    setEditScore(0);
+  };
+
+  const handleSaveEdit = async () => {
+    if (!editingReview) return;
+    if (!editText.trim() || editScore <= 0) {
+      setMessage("Por favor, completá todos los campos antes de guardar.");
+      return;
+    }
+
+    try {
+      setLoading(true);
+      await reviewService.updateReview(editingReview._id, {
+        comment: editText.trim(),
+        score: editScore,
+        scoreDate: new Date().toISOString(), // actualiza la fecha
+      });
+      setMessage("✅ Reseña actualizada con éxito.");
+      setEditingReview(null);
+      fetchReviews(page);
+    } catch (error) {
+      console.error("Error al editar reseña:", error);
+      setMessage("❌ No se pudo actualizar la reseña.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleDeleteReview = async (reviewId: string) => {
+    if (!window.confirm("¿Seguro que querés eliminar esta reseña?")) return;
+
+    try {
+      await reviewService.deleteReview(reviewId);
+      setMessage("🗑️ Reseña eliminada correctamente.");
+      fetchReviews(page);
+    } catch (error) {
+      console.error("Error al eliminar reseña:", error);
+      setMessage("❌ No se pudo eliminar la reseña.");
     }
   };
 
@@ -229,9 +282,47 @@ function Profile() {
                     </div>
                   </div>
                   <div className="review-content">
-                    <p>⭐ {review.score}</p>
-                    <p>{review.comment}</p>
-                    <small>{new Date(review.scoreDate).toLocaleDateString('es-AR')}</small>
+                    {editingReview?._id === review._id ? (
+                      <>
+                        <div className="score-input">
+                          <label>Puntaje:</label>
+                          <Rating
+                            value={editScore}
+                            onChange={(e, val) => setEditScore(val || 0)}
+                            size="large"
+                          />
+                        </div>
+                        <textarea
+                          value={editText}
+                          onChange={(e) => setEditText(e.target.value)}
+                        />
+                        <div className="edit-buttons">
+                          <button onClick={handleSaveEdit} disabled={loading}>
+                            💾 Guardar
+                          </button>
+                          <button onClick={handleCancelEdit} className="cancel-btn">
+                            Cancelar
+                          </button>
+                        </div>
+                      </>
+                    ) : (
+                      <>
+                        <p>⭐ {review.score}</p>
+                        <p>{review.comment}</p>
+                        <small>
+                          {new Date(review.scoreDate).toLocaleDateString("es-AR")}
+                        </small>
+                        <div className="review-actions">
+                          <button onClick={() => handleEditClick(review)}>✏️ Editar</button>
+                          <button
+                            onClick={() => handleDeleteReview(review._id)}
+                            className="delete-btn"
+                          >
+                            🗑️ Eliminar
+                          </button>
+                        </div>
+                      </>
+                    )}
                   </div>
                 </div>
               ))}
