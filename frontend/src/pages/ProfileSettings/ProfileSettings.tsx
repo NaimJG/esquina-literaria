@@ -115,7 +115,7 @@ export default function ProfileSettings() {
           <label htmlFor="nameInput">Nuevo email:</label>
           <input
             id="emailInput"
-            type="text"
+            type="email"
             name="email"
             value={newEmail}
             onChange={(e) => setNewEmail(e.target.value)}
