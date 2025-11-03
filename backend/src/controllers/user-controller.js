@@ -15,6 +15,20 @@ const createUser = async (req, res) => {
   }
 };
 
+// Cambiar email
+const updateEmail = async (req, res) => {
+  const { id } = req.params;
+  const { newEmail } = req.body;
+
+  try {
+    const updatedUser = await userService.cambiarEmail(id, newEmail);
+    res.json(updatedUser);
+  } catch (err) {
+    res.status(err.status || 500).json({ message: err.message });
+  }
+};
+
+
 // Cambiar nombre de usuario
 const updateUsername = async (req, res) => {
   const { id } = req.params;
@@ -41,4 +55,4 @@ const updatePassword = async (req, res) => {
   }
 };
 
-module.exports = { createUser, updateUsername, updatePassword };
+module.exports = { createUser, updateEmail, updateUsername, updatePassword };

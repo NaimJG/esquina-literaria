@@ -6,7 +6,7 @@ import userService from '../../service/userService';
 
 export default function ProfileSettings() {
   const location = useLocation();
-  const { user } = useAuth();
+  const { user, setUser } = useAuth();
   const navigate = useNavigate();
 
   // Refs para hacer scroll hacia las secciones
@@ -14,12 +14,14 @@ export default function ProfileSettings() {
   const iconRef = useRef<HTMLDivElement>(null);
   const nameRef = useRef<HTMLDivElement>(null);
   const passwordRef = useRef<HTMLDivElement>(null);
+  const emailRef = useRef<HTMLDivElement>(null);
 
   // Estados
   const [newUsername, setNewUsername] = useState('');
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [passwordMessage, setPasswordMessage] = useState('');
+  const [newEmail, setNewEmail] = useState('');
 
   useEffect(() => {
     if (location.hash) {
@@ -33,6 +35,8 @@ export default function ProfileSettings() {
           ? nameRef.current
           : id === 'password'
           ? passwordRef.current
+          : id === 'email'
+          ? emailRef.current
           : null;
       if (el) {
         el.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -42,25 +46,47 @@ export default function ProfileSettings() {
 
   const handleBack = () => navigate('/profile');
 
+  const handleEmailChange = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (!newEmail.trim()) return alert("Ingresá un nuevo email");
+
+    try {
+      const updatedUser = await userService.updateEmail(user._id, newEmail);
+      setUser(updatedUser);
+      alert("Email actualizado correctamente ✅");
+      setNewEmail('');
+    } catch (err: any) {
+      alert(err.message);
+    }
+  };
+
   const handleUsernameChange = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (!newUsername.trim()) return alert("Ingresá un nuevo nombre de usuario");
+
     try {
-      await userService.updateUsername(user._id, newUsername);
-      alert('Nombre de usuario actualizado correctamente ✅');
+      const updatedUser = await userService.updateUsername(user._id, newUsername);
+      setUser(updatedUser);
+      alert("Nombre de usuario actualizado correctamente ✅");
       setNewUsername('');
-    } catch (err: unknown) {
+    } catch (err: any) {
       alert(err.message);
     }
   };
 
   const handlePasswordChange = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (!currentPassword || !newPassword) {
+      return alert("Completá ambos campos de contraseña");
+    }
+
     try {
-      await userService.updatePassword(user._id, currentPassword, newPassword);
+      const updatedUser = await userService.updatePassword(user._id, currentPassword, newPassword);
+      setUser(updatedUser);
       setPasswordMessage('Contraseña actualizada correctamente ✅');
       setCurrentPassword('');
       setNewPassword('');
-    } catch (err: unknown) {
+    } catch (err: any) {
       setPasswordMessage(err.message);
     }
   };
@@ -69,7 +95,7 @@ export default function ProfileSettings() {
   return (
     <section className="profile-settings-container">
       <button className="back-button" onClick={handleBack}>← Volver</button>
-      <h2>Ajustes de perfil</h2>
+      <h2>Ajustes de cuenta</h2>
 
       {/* --- Datos actuales del usuario --- */}
       <div className="user-info">
@@ -82,23 +108,19 @@ export default function ProfileSettings() {
         </div>
       </div>
 
-      {/* --- Cambiar color --- */}
-      <div id="color" ref={colorRef} className="settings-section">
-        <h3>Cambiar color de la página</h3>
-        <form>
-          <label htmlFor="colorInput">Color principal:</label>
-          <input id="colorInput" type="color" name="color" defaultValue="#916f5b" />
-          <button type="submit">Guardar color</button>
-        </form>
-      </div>
-
-      {/* --- Cambiar icono --- */}
-      <div id="icon" ref={iconRef} className="settings-section">
-        <h3>Cambiar icono del perfil</h3>
-        <form>
-          <label htmlFor="iconInput">URL del icono:</label>
-          <input id="iconInput" type="text" name="icon" placeholder="https://..." />
-          <button type="submit">Guardar icono</button>
+      {/* --- Cambiar email --- */}
+      <div id="email" ref={emailRef} className="settings-section">
+        <h3>Cambiar email</h3>
+        <form onSubmit={handleEmailChange}>
+          <label htmlFor="nameInput">Nuevo email:</label>
+          <input
+            id="emailInput"
+            type="text"
+            name="email"
+            value={newEmail}
+            onChange={(e) => setNewEmail(e.target.value)}
+          />
+          <button type="submit">Guardar email</button>
         </form>
       </div>
 
@@ -138,6 +160,27 @@ export default function ProfileSettings() {
           />
           <button type="submit">Guardar contraseña</button>
           {passwordMessage && <p>{passwordMessage}</p>}
+        </form>
+      </div>
+
+      <h2>Ajustes de tu página</h2>
+      {/* --- Cambiar color --- */}
+      <div id="color" ref={colorRef} className="settings-section">
+        <h3>Cambiar color de la página</h3>
+        <form>
+          <label htmlFor="colorInput">Color principal:</label>
+          <input id="colorInput" type="color" name="color" defaultValue="#916f5b" />
+          <button type="submit">Guardar color</button>
+        </form>
+      </div>
+
+      {/* --- Cambiar icono --- */}
+      <div id="icon" ref={iconRef} className="settings-section">
+        <h3>Cambiar icono del perfil</h3>
+        <form>
+          <label htmlFor="iconInput">URL del icono:</label>
+          <input id="iconInput" type="text" name="icon" placeholder="https://..." />
+          <button type="submit">Guardar icono</button>
         </form>
       </div>
     </section>

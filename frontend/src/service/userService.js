@@ -39,6 +39,19 @@ const userService = {
         return data;
     },
 
+    // Cambiar email
+    updateEmail: async (userId, newEmail) => {
+        const response = await fetch(`${SERVER_URL}/users/${userId}/email`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ newEmail }),
+        });
+
+        const data = await response.json();
+        if (!response.ok) throw new Error(data.message || "Error al actualizar el email");
+        return data;
+    },
+
     // Cambiar nombre de usuario
     updateUsername: async (userId, newUsername) => {
         const response = await fetch(`${SERVER_URL}/users/${userId}/username`, {
@@ -48,7 +61,7 @@ const userService = {
         });
 
         const data = await response.json();
-        if (!response.ok) throw new Error(data.message || "Error al cambiar nombre de usuario");
+        if (!response.ok) throw new Error(data.message || "Error al actualizar el nombre de usuario");
         return data;
     },
 
@@ -61,10 +74,9 @@ const userService = {
         });
 
         const data = await response.json();
-        if (!response.ok) throw new Error(data.message || "Error al cambiar contraseña");
+        if (!response.ok) throw new Error(data.message || "Error al actualizar la contraseña");
         return data;
     },
-
 
 }
 

@@ -29,6 +29,30 @@ const crearUsuario = async (email, username, password) => {
   return userResponse;
 };
 
+// Cambiar email
+const cambiarEmail = async (id, newEmail) => {
+  const existingEmail = await User.findOne({ email: newEmail });
+  if (existingEmail) {
+    const error = new Error("El email ya está en uso.");
+    error.status = 409;
+    throw error;
+  }
+
+  const user = await User.findByIdAndUpdate(
+    id,
+    { email: newEmail },
+    { new: true }
+  ).select("-password");
+
+  if (!user) {
+    const error = new Error("Usuario no encontrado.");
+    error.status = 404;
+    throw error;
+  }
+
+  return user;
+};
+
 // Cambiar nombre de usuario
 const cambiarNombreUsuario = async (id, newUsername) => {
   const existingUser = await User.findOne({ username: newUsername });
@@ -77,6 +101,7 @@ const cambiarPassword = async (id, oldPassword, newPassword) => {
 
 module.exports = {
   crearUsuario,
+  cambiarEmail,
   cambiarNombreUsuario,
   cambiarPassword,
 };

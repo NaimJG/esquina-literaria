@@ -187,16 +187,19 @@ function Profile() {
           <h4>Ajustes</h4>
           <ul className='profileSettingsList'>
             <li className='listElement'>
-              <Link to="/profile/settings#color">Cambiar color de mi página</Link>
-            </li>
-            <li className='listElement'>
-              <Link to="/profile/settings#icon">Cambiar icono del perfil</Link>
+              <Link to="/profile/settings#email">Cambiar email</Link>
             </li>
             <li className='listElement'>
               <Link to="/profile/settings#name">Cambiar nombre de usuario</Link>
             </li>
             <li className='listElement'>
               <Link to="/profile/settings#password">Cambiar contraseña</Link>
+            </li>
+            <li className='listElement'>
+              <Link to="/profile/settings#color">Cambiar color de mi página</Link>
+            </li>
+            <li className='listElement'>
+              <Link to="/profile/settings#icon">Cambiar icono del perfil</Link>
             </li>
             <li className='listButton'>
               <button onClick={handleLogout} className="logoutButton">
