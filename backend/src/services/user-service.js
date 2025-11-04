@@ -29,6 +29,79 @@ const crearUsuario = async (email, username, password) => {
   return userResponse;
 };
 
+// Cambiar email
+const cambiarEmail = async (id, newEmail) => {
+  const existingEmail = await User.findOne({ email: newEmail });
+  if (existingEmail) {
+    const error = new Error("El email ya está en uso.");
+    error.status = 409;
+    throw error;
+  }
+
+  const user = await User.findByIdAndUpdate(
+    id,
+    { email: newEmail },
+    { new: true }
+  ).select("-password");
+
+  if (!user) {
+    const error = new Error("Usuario no encontrado.");
+    error.status = 404;
+    throw error;
+  }
+
+  return user;
+};
+
+// Cambiar nombre de usuario
+const cambiarNombreUsuario = async (id, newUsername) => {
+  const existingUser = await User.findOne({ username: newUsername });
+  if (existingUser) {
+    const error = new Error("El nombre de usuario ya está en uso.");
+    error.status = 409;
+    throw error;
+  }
+
+  const user = await User.findByIdAndUpdate(
+    id,
+    { username: newUsername },
+    { new: true }
+  ).select("-password");
+
+  if (!user) {
+    const error = new Error("Usuario no encontrado.");
+    error.status = 404;
+    throw error;
+  }
+
+  return user;
+};
+
+// Cambiar contraseña
+const cambiarPassword = async (id, oldPassword, newPassword) => {
+  const user = await User.findById(id);
+  if (!user) {
+    const error = new Error("Usuario no encontrado.");
+    error.status = 404;
+    throw error;
+  }
+
+  const isMatch = await bcrypt.compare(oldPassword, user.password);
+  if (!isMatch) {
+    const error = new Error("La contraseña actual no es correcta.");
+    error.status = 400;
+    throw error;
+  }
+
+  const salt = await bcrypt.genSalt(10);
+  const hashedPassword = await bcrypt.hash(newPassword, salt);
+  user.password = hashedPassword;
+  await user.save();
+};
+
 module.exports = {
   crearUsuario,
+  cambiarEmail,
+  cambiarNombreUsuario,
+  cambiarPassword,
 };

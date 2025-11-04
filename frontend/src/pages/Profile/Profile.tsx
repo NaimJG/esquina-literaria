@@ -1,22 +1,33 @@
-import RightSidebar from '../../components/RightSidebar/RightSidebar';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/useAuth';
 import './Profile.css';
 import { useState, useEffect } from 'react';
 import type { Book } from '../../types/Book';
-import type { Review } from '../../types/Review';
+import reviewService from '../../service/reviewService';
 import bookService from '../../service/bookService';
+import { Rating } from '@mui/material';
+import type { Review } from '../../types/Review';
 
 function Profile() {
   const navigate = useNavigate();
   const { user, logout } = useAuth();
   const [books, setBooks] = useState<Book[]>([]);
   const [selectedBook, setSelectedBook] = useState<Book | null>(null);
+  const [searchBook, setSearchBook] = useState("");
+  const [showSuggestions, setShowSuggestions] = useState(false);
   const [reviewText, setReviewText] = useState("");
   const [score, setScore] = useState<number>(0);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
   const [showReviewForm, setShowReviewForm] = useState(false);
+  const [reviews, setReviews] = useState<Review[]>([]);
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [editingReview, setEditingReview] = useState<Review | null>(null);
+  const [editText, setEditText] = useState("");
+  const [editScore, setEditScore] = useState<number>(0);
+
+  const REVIEWS_PER_PAGE = 5;
 
   const handleLogout = () => {
     logout();
@@ -45,10 +56,26 @@ function Profile() {
     fetchBooks();
   }, []);
 
-  const handleSelectBook = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const bookId = e.target.value;
-    const book = books.find((b) => b.id === bookId) || null;
+  useEffect(() => {
+    if (user) fetchReviews(page);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user, page]);
+
+  const fetchReviews = async (pageNumber: number) => {
+    try {
+      const data = await reviewService.getReviewsByUser(user._id, pageNumber, REVIEWS_PER_PAGE);
+      console.log('Reviews: ', data)
+      setReviews(data.reviews);
+      setTotalPages(data.totalPages);
+    } catch (error) {
+      console.error('Error al cargar reseñas del usuario:', error);
+    }
+  };
+
+  const handleSelectBook = (book: Book) => {
     setSelectedBook(book);
+    setSearchBook(book.title + " – " + book.author);
+    setShowSuggestions(false);
     setMessage("");
   };
 
@@ -63,20 +90,21 @@ function Profile() {
       return;
     }
 
-    const review: Review = {
-      content: reviewText.trim(),
-      score: score,
-      user: { id: user.id, username: user.username },
-      date: new Date().toISOString(),
-    };
-
-    setLoading(true);
     try {
-      await bookService.addReview(selectedBook.id, review);
+      setLoading(true);
+      await reviewService.createReview(selectedBook.id, {
+        score: score,
+        comment: reviewText.trim(),
+        userId: user._id,
+      });
+
       setMessage("✅ ¡Reseña publicada con éxito!");
       setReviewText("");
       setScore(0);
       setSelectedBook(null);
+
+      // Actualizar reseñas
+      fetchReviews(page);
     } catch (error) {
       console.error("Error al publicar reseña:", error);
       setMessage("❌ Ocurrió un error al publicar la reseña.");
@@ -84,6 +112,57 @@ function Profile() {
       setLoading(false);
     }
   };
+
+  const handleEditClick = (review: Review) => {
+    setEditingReview(review);
+    setEditText(review.comment);
+    setEditScore(review.score);
+  };
+
+  const handleCancelEdit = () => {
+    setEditingReview(null);
+    setEditText("");
+    setEditScore(0);
+  };
+
+  const handleSaveEdit = async () => {
+    if (!editingReview) return;
+    if (!editText.trim() || editScore <= 0) {
+      setMessage("Por favor, completá todos los campos antes de guardar.");
+      return;
+    }
+
+    try {
+      setLoading(true);
+      await reviewService.updateReview(editingReview._id, {
+        comment: editText.trim(),
+        score: editScore,
+        scoreDate: new Date().toISOString(), // actualiza la fecha
+      });
+      setMessage("✅ Reseña actualizada con éxito.");
+      setEditingReview(null);
+      fetchReviews(page);
+    } catch (error) {
+      console.error("Error al editar reseña:", error);
+      setMessage("❌ No se pudo actualizar la reseña.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleDeleteReview = async (reviewId: string) => {
+    if (!window.confirm("¿Seguro que querés eliminar esta reseña?")) return;
+
+    try {
+      await reviewService.deleteReview(reviewId);
+      setMessage("🗑️ Reseña eliminada correctamente.");
+      fetchReviews(page);
+    } catch (error) {
+      console.error("Error al eliminar reseña:", error);
+      setMessage("❌ No se pudo eliminar la reseña.");
+    }
+  };
+
   return (
     <>
       <section className="profileContainer">
@@ -96,15 +175,45 @@ function Profile() {
 
         {showReviewForm && (
           <div className="review-form-container">
-            <label htmlFor="bookSelect">Seleccioná un libro:</label>
-              <select id="bookSelect" name="bookSelect" onChange={handleSelectBook} value={selectedBook?.id || ""}>
-            <option value="">-- Elegí un libro --</option>
-            {books.map((book) => (
-              <option key={book.id} value={book.id}>
-                {book.title} – {book.author}
-              </option>
-            ))}
-          </select>
+            <label htmlFor="bookSearch">Seleccioná un libro:</label>
+            <input
+              id="bookSearch"
+              name="bookSearch"
+              type="text"
+              autoComplete="off"
+              placeholder="Buscar por título o autor..."
+              value={searchBook}
+              onChange={e => {
+                setSearchBook(e.target.value);
+                setShowSuggestions(true);
+                setSelectedBook(null);
+              }}
+              onFocus={() => setShowSuggestions(true)}
+              style={{ width: '100%', padding: '10px', borderRadius: '4px', fontSize: '16px', marginBottom: '8px', boxSizing: 'border-box' }}
+            />
+            {showSuggestions && searchBook.trim() && (
+              <ul className="book-suggestions">
+                {books.filter(b =>
+                  b.title.toLowerCase().includes(searchBook.toLowerCase()) ||
+                  b.author.toLowerCase().includes(searchBook.toLowerCase())
+                ).slice(0, 8).map(book => (
+                  <li
+                    key={book.id}
+                    onClick={() => handleSelectBook(book)}
+                    className={selectedBook?.id === book.id ? 'selected' : ''}
+                    style={{ cursor: 'pointer', padding: '8px', borderBottom: '1px solid #eee'}}
+                  >
+                    {book.title} – {book.author}
+                  </li>
+                ))}
+                {books.filter(b =>
+                  b.title.toLowerCase().includes(searchBook.toLowerCase()) ||
+                  b.author.toLowerCase().includes(searchBook.toLowerCase())
+                ).length === 0 && (
+                  <li style={{ padding: '8px', color: '#999' }}>No se encontraron libros</li>
+                )}
+              </ul>
+            )}
 
           {selectedBook && (
             <div className="book-preview">
@@ -119,16 +228,16 @@ function Profile() {
                 </div>
               </div>
 
-              <div className='score-input'>
-                <label htmlFor="scoreInput">Puntaje (1 a 5):</label>
-                <input
-                  id="scoreInput"
-                  name="score"
-                  type="number"
-                  min={1}
-                  max={5}
+              <div className="score-input">
+                <label htmlFor="scoreInput" style={{ marginBottom: '6px' }}>
+                  Puntaje:
+                </label>
+                <Rating
+                  name="scoreInput"
                   value={score}
-                  onChange={(e) => setScore(Number(e.target.value))}
+                  onChange={(event, newValue) => setScore(newValue || 0)}
+                  precision={1}
+                  size="large"
                 />
               </div>
               
@@ -152,23 +261,117 @@ function Profile() {
           {message && <p className="message">{message}</p>}
           </div>
         )}
-      </section>
-      <RightSidebar width="300px" topOffset="80px" fixed={true} className="right-sidebar">
-          <div style={{ padding: '8px' }}>
-            <h4 style={{ fontSize: '20px', textAlign: 'left', color: '#916f5b'}}>Ajustes</h4>
-            <ul className='profileSettingsList'>
-              <li><Link to="#">Cambiar color de mi página</Link></li>
-              <li><Link to="#">Cambiar icono del perfil</Link></li>
-              <li><Link to="#">Cambiar nombre de usuario</Link></li>
-              <li><Link to="#">Cambiar constraseña</Link></li>
-              <li>
-                <button onClick={handleLogout} className="logoutButton" style={{ background: 'transparent', border: 'none', color: 'red', fontWeight: 'bold', cursor: 'pointer' }}>
-                  Cerrar sesión
-                </button>
-              </li>
+
+        {/* 🔹 Sección de reseñas */}
+        <section className="user-reviews-section">
+          <h3>Mis reseñas</h3>
+          {reviews.length === 0 ? (
+            <p>No has publicado ninguna reseña todavía.</p>
+          ) : (
+            <ul className="user-reviews-list">
+              {reviews.map((review: Review) => (
+                <div key={review._id} className="book-preview">
+                  <div className="book-cover-info">
+                    <img src={review.book?.cover || '/default-cover.jpg'} alt={review.book?.title} />
+                    <div className="book-info">
+                      <h4>{review.book?.title}</h4>
+                      <p><strong>Autor:</strong> {review.book?.author}</p>
+                      <p><strong>Género:</strong> {review.book?.genre}</p>
+                      <p><strong>Categoría:</strong> {review.book?.category}</p>
+                      <p>{review.book?.synopsis}</p>
+                    </div>
+                  </div>
+                  <div className="review-content">
+                    {editingReview?._id === review._id ? (
+                      <>
+                        <div className="score-input">
+                          <label>Puntaje:</label>
+                          <Rating
+                            value={editScore}
+                            onChange={(e, val) => setEditScore(val || 0)}
+                            size="large"
+                          />
+                        </div>
+                        <textarea
+                          value={editText}
+                          onChange={(e) => setEditText(e.target.value)}
+                        />
+                        <div className="edit-buttons">
+                          <button onClick={handleSaveEdit} disabled={loading}>
+                            💾 Guardar
+                          </button>
+                          <button onClick={handleCancelEdit} className="cancel-btn">
+                            Cancelar
+                          </button>
+                        </div>
+                      </>
+                    ) : (
+                      <>
+                        <p>⭐ {review.score}</p>
+                        <p>{review.comment}</p>
+                        <small>
+                          {new Date(review.scoreDate).toLocaleDateString("es-AR")}
+                        </small>
+                        <div className="review-actions">
+                          <button onClick={() => handleEditClick(review)}>✏️ Editar</button>
+                          <button
+                            onClick={() => handleDeleteReview(review._id)}
+                            className="delete-btn"
+                          >
+                            🗑️ Eliminar
+                          </button>
+                        </div>
+                      </>
+                    )}
+                  </div>
+                </div>
+              ))}
             </ul>
-          </div>
-      </RightSidebar>
+          )}
+
+          {/* 🔹 Paginación */}
+          {totalPages > 1 && (
+            <div className="pagination">
+              <button disabled={page === 1} onClick={() => setPage(page - 1)}>
+                ◀ Anterior
+              </button>
+              <span>
+                Página {page} de {totalPages}
+              </span>
+              <button disabled={page === totalPages} onClick={() => setPage(page + 1)}>
+                Siguiente ▶
+              </button>
+            </div>
+          )}
+        </section>
+
+        <aside className="right-sidebar">
+          <h4>Ajustes</h4>
+          <ul className='profileSettingsList'>
+            <li className='listElement'>
+              <Link to="/profile/settings#email">Cambiar email</Link>
+            </li>
+            <li className='listElement'>
+              <Link to="/profile/settings#name">Cambiar nombre de usuario</Link>
+            </li>
+            <li className='listElement'>
+              <Link to="/profile/settings#password">Cambiar contraseña</Link>
+            </li>
+            <li className='listElement'>
+              <Link to="/profile/settings#color">Cambiar color de mi página</Link>
+            </li>
+            <li className='listElement'>
+              <Link to="/profile/settings#icon">Cambiar icono del perfil</Link>
+            </li>
+            <li className='listButton'>
+              <button onClick={handleLogout} className="logoutButton">
+                Cerrar sesión
+              </button>
+            </li>
+          </ul>
+        </aside>
+      </section>
+
     </>
   );
 }

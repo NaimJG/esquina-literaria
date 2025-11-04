@@ -1,7 +1,11 @@
+import type { Book } from "./Book";
+
 export interface Review {
   _id?: string;
-  content: string;
+  book: Book;
+  comment: string;
   score: number;
+  scoreDate: Date;
   user: User;
   date?: string;
 }

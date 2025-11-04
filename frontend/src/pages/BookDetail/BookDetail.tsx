@@ -162,7 +162,7 @@ function BookDetail() {
                                     <div className='review-content' key={rev._id}>
                                         <span><strong>Fecha:</strong> {new Date(rev.scoreDate).toLocaleDateString()} - <strong>{rev.user.username}</strong></span>
                                         <span><strong>Comentario:</strong> {rev.comment}</span>
-                                        <span><strong>Calificación:</strong> {rev.score}</span>
+                                        <span><strong>Calificación:</strong>  {rev.score}⭐</span>
                                     </div>
                                 ))
                             ) : (

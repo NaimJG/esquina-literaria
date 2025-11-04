@@ -38,6 +38,46 @@ const userService = {
 
         return data;
     },
+
+    // Cambiar email
+    updateEmail: async (userId, newEmail) => {
+        const response = await fetch(`${SERVER_URL}/users/${userId}/email`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ newEmail }),
+        });
+
+        const data = await response.json();
+        if (!response.ok) throw new Error(data.message || "Error al actualizar el email");
+        return data;
+    },
+
+    // Cambiar nombre de usuario
+    updateUsername: async (userId, newUsername) => {
+        const response = await fetch(`${SERVER_URL}/users/${userId}/username`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ newUsername }),
+        });
+
+        const data = await response.json();
+        if (!response.ok) throw new Error(data.message || "Error al actualizar el nombre de usuario");
+        return data;
+    },
+
+    // Cambiar contraseña
+    updatePassword: async (userId, oldPassword, newPassword) => {
+        const response = await fetch(`${SERVER_URL}/users/${userId}/password`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ oldPassword, newPassword }),
+        });
+
+        const data = await response.json();
+        if (!response.ok) throw new Error(data.message || "Error al actualizar la contraseña");
+        return data;
+    },
+
 }
 
 export default userService;
