@@ -13,12 +13,12 @@ bookReviewRouter.post('/', reviewController.createReview);
 bookReviewRouter.get('/', reviewController.getReviewsForBook);
 
 // GET /reviews/:userId Obtener reseñas de un usuario con paginación
-router.get("/:userId", reviewController.getReviewsByUser);
+reviewRouter.get("/:userId", reviewController.getReviewsByUser);
 
 // PUT /:reviewId
-router.put("/:reviewId", reviewController.updateReview);
+reviewRouter.put("/:reviewId", reviewController.updateReview);
 
-router.delete("/:reviewId", reviewController.deleteReview);
+reviewRouter.delete("/:reviewId", reviewController.deleteReview);
 
 module.exports = {
     reviewRouter,

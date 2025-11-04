@@ -30,7 +30,7 @@ app.use('/books', bookRoutes);
 app.use('/authors', authorRoutes);
 app.use('/categories', categoryRoutes);
 app.use('/genres', genreRoutes);
-app.use('/reviews', reviewRoutes);
+app.use('/reviews', reviewRouter);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Servidor corriendo en puerto ${PORT}`));
