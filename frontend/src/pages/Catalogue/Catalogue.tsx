@@ -4,6 +4,16 @@ import BookSidebar from '../../components/BookSidebar/BookSidebar';
 import Library from '../../components/Library/Library';
 import type { Book, BookFilter } from '../../types/Book';
 import bookService from '../../service/bookService';
+import reviewService from '../../service/reviewService';
+
+interface Review {
+    _id: string;
+    book: Book;
+    user: { _id: string, username: string };
+    score: number;
+    comment: string;
+    scoreDate: string;
+}
 
 type ActiveFilters = {
     [K in keyof BookFilter]: string[];
@@ -16,6 +26,7 @@ function Catalogue() {
     const [categories, setCategories] = useState<string[]>([]);
     const [genres, setGenres] = useState<string[]>([]);
     const [authors, setAuthors] = useState<string[]>([]);
+    const [reviews, setReviews] = useState<Review[]>([]); // Corregido: Tipo y valor inicial
 
     useEffect(() => {
         const getCategories = async () => {
@@ -31,7 +42,7 @@ function Catalogue() {
 
     }, [])
 
-     useEffect(() => {
+    useEffect(() => {
         const getGenres = async () => {
             try {
                 const genresData = await bookService.getGenres();
@@ -45,7 +56,7 @@ function Catalogue() {
 
     }, [])
 
-       useEffect(() => {
+    useEffect(() => {
         const getAuthors = async () => {
             try {
                 const authorsData = await bookService.getAuthors();
@@ -106,6 +117,19 @@ function Catalogue() {
         });
     };
 
+    useEffect(() => {
+        const getReviews = async () => {
+            try {
+                const reviewsData = await reviewService.getAllReviews();
+                setReviews(reviewsData);
+            } catch (error) {
+                console.error("Error al obtener las reseñas.", error);
+            }
+        };
+        getReviews();
+    }, []);
+
+
     return (
         <>
             <section className='catalogueContainer'>
@@ -121,7 +145,12 @@ function Catalogue() {
                     </div>
                 </section>
                 <aside className='asideComments'>
-                    Comentarios
+                    <h4>Últimas Reseñas</h4>
+                    {reviews.map(review => (
+                        <div key={review._id} className="review-item">
+                            <p>"{review.comment}" ({review.score}★)</p>
+                        </div>
+                    ))}
                 </aside>
             </section>
         </>

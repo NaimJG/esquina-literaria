@@ -8,7 +8,7 @@ const bookRoutes = require('./src/routes/book-routes');
 const authorRoutes = require('./src/routes/author-routes');
 const categoryRoutes = require('./src/routes/category-routes');
 const genreRoutes = require('./src/routes/genre-routes');
-const reviewRoutes = require('./src/routes/review-routes');
+const { reviewRouter } = require('./src/routes/review-routes');
 
 dotenv.config();
 connectDB();
