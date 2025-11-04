@@ -9,7 +9,6 @@ html {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #fffdfb;
 }
 
 body {
@@ -20,7 +19,7 @@ body {
   display: flex;
   min-width: 320px;
   min-height: 100vh;
-  font-family: 'Poppins', sans-serif
+  background-color: #fffcfa;
 }
 
 #root{
@@ -32,5 +31,9 @@ a,
 button,
 form {
   font-family: 'Poppins', sans-serif;
+}
+
+input{
+  background-color: #fffcfa;
 }
 
