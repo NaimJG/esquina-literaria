@@ -28,7 +28,7 @@ const reviewService = {
         }
 
         return await response.json();
-    }
+    },
 
     getReviewsByUser: async (userId, page = 1, limit = 5) => {
         try {
