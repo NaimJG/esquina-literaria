@@ -9,6 +9,8 @@ import Login from './pages/Login/Login'
 import Profile from './pages/Profile/Profile'
 import BookDetail from './pages/BookDetail/BookDetail'
 import ProfileSettings from './pages/ProfileSettings/ProfileSettings'
+import AdminRoute from "./routes/AdminRoute";
+import AdminBooksPage from './pages/AdminBooksPage/AdminBooksPage';
 
 function App() {
   return (
@@ -26,6 +28,7 @@ function App() {
           <Route path='/profile' element={<Profile />} />
           <Route path='/books/:id' element={<BookDetail />} />
           <Route path='/profile/settings' element={<ProfileSettings />} />
+          <Route path="/admin/books" element={<AdminRoute><AdminBooksPage /></AdminRoute>} />
         </Routes>
       </main>
     </>

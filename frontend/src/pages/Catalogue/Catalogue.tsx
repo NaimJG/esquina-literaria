@@ -4,6 +4,9 @@ import BookSidebar from '../../components/BookSidebar/BookSidebar';
 import Library from '../../components/Library/Library';
 import type { Book, BookFilter } from '../../types/Book';
 import bookService from '../../service/bookService';
+import authorService from '../../service/authorService';
+import categoryService from '../../service/categoryService';
+import genreService from '../../service/genreService';
 
 type ActiveFilters = {
     [K in keyof BookFilter]: string[];
@@ -20,7 +23,7 @@ function Catalogue() {
     useEffect(() => {
         const getCategories = async () => {
             try {
-                const categoriesData = await bookService.getCategories();
+                const categoriesData = await categoryService.getAllCategories();
                 const categoryNames = categoriesData.map((category: { name: string }) => category.name);
                 setCategories(categoryNames);
             } catch (error) {
@@ -34,7 +37,7 @@ function Catalogue() {
      useEffect(() => {
         const getGenres = async () => {
             try {
-                const genresData = await bookService.getGenres();
+                const genresData = await genreService.getAllGenres();
                 const genreNames = genresData.map((genre: { name: string }) => genre.name);
                 setGenres(genreNames);
             } catch (error) {
@@ -48,7 +51,7 @@ function Catalogue() {
        useEffect(() => {
         const getAuthors = async () => {
             try {
-                const authorsData = await bookService.getAuthors();
+                const authorsData = await authorService.getAllAuthors();
                 const authorNames = authorsData.map((author: { name: string }) => author.name);
                 setAuthors(authorNames);
             } catch (error) {

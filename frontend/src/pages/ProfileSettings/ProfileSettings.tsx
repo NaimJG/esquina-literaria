@@ -122,7 +122,7 @@ export default function ProfileSettings() {
       <div id="email" ref={emailRef} className="settings-section">
         <h3>Cambiar email</h3>
         <form onSubmit={handleEmailChange}>
-          <label htmlFor="nameInput">Nuevo email:</label>
+          <label htmlFor="emailInput">Nuevo email:</label>
           <input
             id="emailInput"
             type="email"

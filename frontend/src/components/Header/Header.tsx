@@ -53,8 +53,8 @@ function Header() {
                   <ul className='navList navCart'>
                     <li><NavLink to="/home" className={({ isActive }) => isActive ? 'nav-active' : 'nav-li'}>Explorar</NavLink></li>
                     <li style={{ alignSelf: 'center' }}>
-                      <Tooltip title="Ver Perfil">
-                        <NavLink to="/profile">
+                      <Tooltip title={user.role === "admin" ? "Panel de administrador" : "Ver perfil"}>
+                        <NavLink to={user.role === "admin" ? "/admin/books" : "/profile"}>
                           <Avatar {...stringAvatar(user.username)} />
                         </NavLink>
                       </Tooltip>

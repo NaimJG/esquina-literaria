@@ -315,7 +315,7 @@ function Profile() {
                         <div className="review-actions">
                           <button onClick={() => handleEditClick(review)}>✏️ Editar</button>
                           <button
-                            onClick={() => handleDeleteReview(review._id)}
+                            onClick={() => handleDeleteReview(review._id!)}
                             className="delete-btn"
                           >
                             🗑️ Eliminar
