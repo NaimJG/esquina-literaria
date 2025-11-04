@@ -5,6 +5,9 @@ import Library from '../../components/Library/Library';
 import type { Book, BookFilter } from '../../types/Book';
 import bookService from '../../service/bookService';
 import reviewService from '../../service/reviewService';
+import authorService from '../../service/authorService';
+import categoryService from '../../service/categoryService';
+import genreService from '../../service/genreService';
 
 interface Review {
     _id: string;
@@ -14,9 +17,6 @@ interface Review {
     comment: string;
     scoreDate: string;
 }
-import authorService from '../../service/authorService';
-import categoryService from '../../service/categoryService';
-import genreService from '../../service/genreService';
 
 type ActiveFilters = {
     [K in keyof BookFilter]: string[];
