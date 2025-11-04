@@ -1,23 +1,26 @@
 const express = require('express');
-const router = express.Router({ mergeParams: true });
 const reviewController = require('../controllers/review-controller');
+const bookReviewRouter = express.Router({ mergeParams: true });
+const reviewRouter = express.Router();
 
 // GET /reviews/sorted - Obtener todas las reseñas ordenadas por fecha y puntuación.
-router.get('/sorted', reviewController.getSortedReviews);
+reviewRouter.get('/sorted', reviewController.getSortedReviews);
 
 // POST /books/:bookId/reviews - Crear una nueva reseña.
-router.post('/', reviewController.createReview);
+bookReviewRouter.post('/', reviewController.createReview);
 
 // GET /books/:bookId/reviews - Obtener reseñas de un libro por id.
-router.get('/', reviewController.getReviewsForBook);
+bookReviewRouter.get('/', reviewController.getReviewsForBook);
 
 // GET /reviews/:userId Obtener reseñas de un usuario con paginación
-router.get("/:userId", reviewController.getReviewsByUser);
+reviewRouter.get("/:userId", reviewController.getReviewsByUser);
 
 // PUT /:reviewId
-router.put("/:reviewId", reviewController.updateReview);
+reviewRouter.put("/:reviewId", reviewController.updateReview);
 
+reviewRouter.delete("/:reviewId", reviewController.deleteReview);
 
-router.delete("/:reviewId", reviewController.deleteReview);
-
-module.exports = router;
+module.exports = {
+    reviewRouter,
+    bookReviewRouter
+};
