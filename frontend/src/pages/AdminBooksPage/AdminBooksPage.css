@@ -51,6 +51,7 @@
   color: #555;
   font-weight: 500;
   text-align: left;
+  margin-bottom: 6px;
 }
 
 .book-form-container select {
@@ -61,24 +62,97 @@
   margin-bottom: 20px;
 }
 
+.book-form-container img {
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
 .admin-book-form input,
 .admin-book-form textarea {
+  width: 100%;
   padding: 10px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
+  border-radius: 4px;
+  border: 1px solid #e0c7a0;
   font-size: 16px;
+  box-sizing: border-box;
+  margin-bottom: 12px;
+  transition: border-color 0.2s, box-shadow 0.2s;
 }
 
 .admin-book-form button {
-  margin-top: 10px;
-  padding: 12px;
+  width: 200px;
+  align-self: center;
   background: #0e7c86;
   color: white;
   border: none;
+  padding: 12px 24px;
   border-radius: 8px;
+  font-size: 16px;
   cursor: pointer;
+  margin-top: 10px;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
 .admin-book-form button:hover {
-  background: #0a5c63;
+  background-color: #0a5c63;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.admin-book-form button:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.admin-book-form input:focus,
+.admin-book-form textarea:focus {
+  border-color: #916f5b;
+  box-shadow: 0 0 0 2px rgba(145, 111, 91, 0.2);
+  outline: none;
+}
+
+.admin-book-form textarea {
+  resize: vertical;
+  min-height: 120px;
+  line-height: 1.5;
+}
+
+.suggestion-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.suggestions-list {
+  position: absolute;
+  z-index: 5;
+  background: #fff;
+  border: 1px solid #e0c7a0;
+  border-radius: 6px;
+  margin-top: 2px;
+  width: 100%;
+  max-height: 180px;
+  overflow-y: auto;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  list-style: none;
+  padding: 0;
+}
+
+.suggestions-list li {
+  padding: 8px 14px;
+  cursor: pointer;
+  color: #6d4c2e;
+  background: #fff;
+  transition: background 0.2s, color 0.2s;
+}
+
+.suggestions-list li:hover {
+  background: #f1dec9;
+  color: #916f5b;
+}
+
+.suggestions-list .no-results {
+  color: #999;
+  cursor: default;
+  font-style: italic;
 }

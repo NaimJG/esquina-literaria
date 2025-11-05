@@ -44,7 +44,13 @@ export default function ProfileSettings() {
     }
   }, [location.hash]);
 
-  const handleBack = () => navigate('/profile');
+  const handleBack = () => {
+    if (user.role == "admin") {
+      navigate('/admin/books');
+    } else {
+      navigate('/profile')
+    }
+  } 
 
   const handleEmailChange = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

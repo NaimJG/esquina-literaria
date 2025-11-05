@@ -212,6 +212,10 @@ textarea {
   display: none;
 }
 
+.user-reviews-list {
+  padding: 0;
+}
+
 /* Estilos de la lista de configuración */
 .profileSettingsList {
   list-style: none;

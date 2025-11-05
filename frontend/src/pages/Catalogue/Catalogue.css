@@ -28,7 +28,8 @@
 }
 
 .books{
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
   padding: 0 40px;
   gap: 20px;
 }

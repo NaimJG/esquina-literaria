@@ -1,4 +1,6 @@
 const Book = require("../models/Book");
+const Category = require("../models/Category");
+const Genre = require("../models/Genre");
 
 const createBook = async (bookData) => {
   const { title, synopsis, author, category, genre, cover } = bookData;
@@ -11,12 +13,26 @@ const createBook = async (bookData) => {
     throw error;
   }
 
+  let categoryDoc = await Category.findOne({ name: category });
+  if (!categoryDoc) {
+    categoryDoc = new Category({ name: category });
+    await categoryDoc.save();
+  }
+
+  // Verificar o crear Genre
+  let genreDoc = await Genre.findOne({ name: genre });
+  if (!genreDoc) {
+    genreDoc = new Genre({ name: genre });
+    await genreDoc.save();
+  }
+
+  // Crear el libro con las referencias
   const newBook = new Book({
     title,
     synopsis,
     author,
-    category,
-    genre,
+    category: categoryDoc.name,
+    genre: genreDoc.name,
     cover,
   });
 

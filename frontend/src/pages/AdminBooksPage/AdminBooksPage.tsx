@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import bookService from "../../service/bookService";
 import authorService from "../../service/authorService";
 import categoryService from "../../service/categoryService";
@@ -8,9 +8,11 @@ import "./AdminBooksPage.css";
 import type { Genre } from "../../types/Genre";
 import type { Author } from "../../types/Author";
 import type { Category } from "../../types/Category";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function AdminBooksPage() {
-  const { user } = useAuth();
+  const navigate = useNavigate();
+  const { user, logout } = useAuth();
   const [title, setTitle] = useState("");
   const [synopsis, setSynopsis] = useState("");
   const [cover, setCover] = useState("");
@@ -24,6 +26,41 @@ export default function AdminBooksPage() {
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
   const [showNewBookForm, setShowNewBookForm] = useState(false);
+  const [showAuthorSuggestions, setShowAuthorSuggestions] = useState(false);
+  const [showGenreSuggestions, setShowGenreSuggestions] = useState(false);
+  const [showCategorySuggestions, setShowCategorySuggestions] = useState(false);
+  const authorWrapperRef = useRef<HTMLDivElement | null>(null);
+  const genreWrapperRef = useRef<HTMLDivElement | null>(null);
+  const categoryWrapperRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (
+        authorWrapperRef.current &&
+        !authorWrapperRef.current.contains(event.target as Node)
+      ) {
+        setShowAuthorSuggestions(false);
+      }
+
+      if (
+        genreWrapperRef.current &&
+        !genreWrapperRef.current.contains(event.target as Node)
+      ) {
+        setShowGenreSuggestions(false);
+      }
+
+      if (
+        categoryWrapperRef.current &&
+        !categoryWrapperRef.current.contains(event.target as Node)
+      ) {
+        setShowCategorySuggestions(false);
+      }
+
+    }
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   useEffect(() => {
     Promise.all([
@@ -84,6 +121,12 @@ export default function AdminBooksPage() {
       setLoading(false);
     }
   };
+  
+  const handleLogout = () => {
+    logout();
+    navigate('/');
+  }
+
 
   return (
     <section className="admin-books-container">
@@ -99,43 +142,121 @@ export default function AdminBooksPage() {
 
             <form onSubmit={handleSubmit} className="admin-book-form">
                 <label>Título *</label>
-                <input value={title} onChange={(e) => setTitle(e.target.value)} />
+                <input value={title} onChange={(e) => setTitle(e.target.value)} placeholder="Escribí acá el título del libro..."/>
 
                 <label>Autor *</label>
-                <input
-                value={author}
-                onChange={(e) => setAuthor(e.target.value)}
-                list="author-list"
-                />
-                <datalist id="author-list">
-                {authors.map((a) => (
-                    <option key={a} value={a} />
-                ))}
-                </datalist>
+                <div className="suggestion-wrapper" ref={authorWrapperRef}>
+                  <input
+                    value={author}
+                    onChange={(e) => {
+                      setAuthor(e.target.value);
+                      setShowAuthorSuggestions(true);
+                    }}
+                    onFocus={() => setShowAuthorSuggestions(true)}
+                    placeholder="Escribí o seleccioná un autor..."
+                  />
+                  {showAuthorSuggestions && author.trim() && (
+                    <ul className="suggestions-list">
+                      {authors
+                        .filter((a) =>
+                          a.toLowerCase().includes(author.toLowerCase())
+                        )
+                        .slice(0, 8)
+                        .map((a) => (
+                          <li
+                            key={a}
+                            onClick={() => {
+                              setAuthor(a);
+                              setShowAuthorSuggestions(false);
+                            }}
+                          >
+                            {a}
+                          </li>
+                        ))}
+                      {authors.filter((a) =>
+                        a.toLowerCase().includes(author.toLowerCase())
+                      ).length === 0 && (
+                        <li className="no-results">Nuevo autor: {author}</li>
+                      )}
+                    </ul>
+                  )}
+                </div>
 
                 <label>Género *</label>
-                <input
-                value={genre}
-                onChange={(e) => setGenre(e.target.value)}
-                list="genre-list"
-                />
-                <datalist id="genre-list">
-                {genres.map((g) => (
-                    <option key={g} value={g} />
-                ))}
-                </datalist>
+                <div className="suggestion-wrapper" ref={genreWrapperRef}>
+                  <input
+                    value={genre}
+                    onChange={(e) => {
+                      setGenre(e.target.value);
+                      setShowGenreSuggestions(true);
+                    }}
+                    onFocus={() => setShowGenreSuggestions(true)}
+                    placeholder="Escribí o seleccioná un género..."
+                  />
+                  {showGenreSuggestions && genre.trim() && (
+                    <ul className="suggestions-list">
+                      {genres
+                        .filter((g) =>
+                          g.toLowerCase().includes(genre.toLowerCase())
+                        )
+                        .slice(0, 8)
+                        .map((g) => (
+                          <li
+                            key={g}
+                            onClick={() => {
+                              setGenre(g);
+                              setShowGenreSuggestions(false);
+                            }}
+                          >
+                            {g}
+                          </li>
+                        ))}
+                      {genres.filter((g) =>
+                        g.toLowerCase().includes(genre.toLowerCase())
+                      ).length === 0 && (
+                        <li className="no-results">Nuevo género: {genre}</li>
+                      )}
+                    </ul>
+                  )}
+                </div>
 
                 <label>Categoría *</label>
-                <input
-                value={category}
-                onChange={(e) => setCategory(e.target.value)}
-                list="category-list"
-                />
-                <datalist id="category-list">
-                {categories.map((c) => (
-                    <option key={c} value={c} />
-                ))}
-                </datalist>
+                <div className="suggestion-wrapper" ref={categoryWrapperRef}>
+                  <input
+                    value={category}
+                    onChange={(e) => {
+                      setCategory(e.target.value);
+                      setShowCategorySuggestions(true);
+                    }}
+                    onFocus={() => setShowCategorySuggestions(true)}
+                    placeholder="Escribí o seleccioná una categoría..."
+                  />
+                  {showCategorySuggestions && category.trim() && (
+                    <ul className="suggestions-list">
+                      {categories
+                        .filter((c) =>
+                          c.toLowerCase().includes(category.toLowerCase())
+                        )
+                        .slice(0, 8)
+                        .map((c) => (
+                          <li
+                            key={c}
+                            onClick={() => {
+                              setCategory(c);
+                              setShowCategorySuggestions(false);
+                            }}
+                          >
+                            {c}
+                          </li>
+                        ))}
+                      {categories.filter((c) =>
+                        c.toLowerCase().includes(category.toLowerCase())
+                      ).length === 0 && (
+                        <li className="no-results">Nueva categoría: {category}</li>
+                      )}
+                    </ul>
+                  )}
+                </div>
 
                 <label>Portada (URL de la imagen)</label>
                 <input
@@ -144,6 +265,7 @@ export default function AdminBooksPage() {
                     setCover(e.target.value);
                     setPreview(e.target.value);
                 }}
+                placeholder="Copia aquí la URL de la imágen..."
                 />
                 {preview && (
                 <img
@@ -158,6 +280,7 @@ export default function AdminBooksPage() {
                 rows={6}
                 value={synopsis}
                 onChange={(e) => setSynopsis(e.target.value)}
+                placeholder="Escribí acá la sinópsis del libro..."
                 />
 
                 <button type="submit" disabled={loading}>
@@ -168,6 +291,31 @@ export default function AdminBooksPage() {
             {message && <p className="message">{message}</p>}
           </div>
         )}  
+      <aside className="right-sidebar">
+          <h4>Ajustes</h4>
+          <ul className='profileSettingsList'>
+            <li className='listElement'>
+              <Link to="/profile/settings#email">Cambiar email</Link>
+            </li>
+            <li className='listElement'>
+              <Link to="/profile/settings#name">Cambiar nombre de usuario</Link>
+            </li>
+            <li className='listElement'>
+              <Link to="/profile/settings#password">Cambiar contraseña</Link>
+            </li>
+            <li className='listElement'>
+              <Link to="/profile/settings#color">Cambiar color de mi página</Link>
+            </li>
+            <li className='listElement'>
+              <Link to="/profile/settings#icon">Cambiar icono del perfil</Link>
+            </li>
+            <li className='listButton'>
+              <button onClick={handleLogout} className="logoutButton">
+                Cerrar sesión
+              </button>
+            </li>
+          </ul>
+        </aside>
     </section>
   );
 }
