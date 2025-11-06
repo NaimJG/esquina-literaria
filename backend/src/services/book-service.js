@@ -3,7 +3,7 @@ const Category = require("../models/Category");
 const Genre = require("../models/Genre");
 
 const createBook = async (bookData) => {
-  const { title, synopsis, author, category, genre, cover } = bookData;
+  const { title, synopsis, author, category, genre, cover, publishDate } = bookData;
 
   const existingBook = await Book.findOne({ title, author });
 
@@ -34,6 +34,7 @@ const createBook = async (bookData) => {
     category: categoryDoc.name,
     genre: genreDoc.name,
     cover,
+    publishDate,
   });
 
   await newBook.save();
@@ -64,6 +65,8 @@ const getAllBooks = async () => {
     genre: book.genre ? book.genre : 'N/A',
     score: book.averageScore || 0,
     cover: book.cover || 'N/A',
+    publishDate: book.publishDate || null,
+    reviewCount: book.reviews?.length || 0,
   }));
 
   return formattedBooks;
@@ -93,6 +96,7 @@ const getBookById = async (bookId) => {
     genre: book.genre ? book.genre : 'N/A',
     score: book.averageScore || 0,
     cover: book.cover || 'N/A',
+    publishDate: book.publishDate,
     reviews: book.reviews
   });
 

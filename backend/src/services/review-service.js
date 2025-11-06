@@ -51,7 +51,7 @@ const getReviewsForBook = async (bookId) => {
 };
 
 const getSortedReviews = async () => {
-  const reviews = await Review.find({}).sort({ scoreDate: -1, score: -1 }).populate('user', 'username');
+  const reviews = await Review.find({}).sort({ scoreDate: -1, score: -1 }).populate('user', 'username').populate('book', 'title');
   return reviews;
 };
 

@@ -10,6 +10,8 @@ export interface Book {
   score: number;
   cover: string;
   reviews?: Review[];
+  publishDate: Date;
+  reviewCount: number;
 }
 
 export interface BookCardProps {

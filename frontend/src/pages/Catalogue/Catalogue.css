@@ -5,7 +5,7 @@
   box-sizing: border-box;
   margin: 2px 0;
   margin-top: 80px;
-  padding: 40px 120px;
+  padding: 40px;
 }
 
 .catalogueAside{
@@ -17,6 +17,14 @@
   flex-direction: column;
   gap: 14px;
   padding: 0 4px;
+  padding-bottom: 20px;
+}
+
+.catalogueAside h4 {
+  text-align: center;
+  margin: 0;
+  font-size: 18px;
+  color: #916f5b;
 }
 
 .catalogueMain {
@@ -38,9 +46,48 @@
   min-width: 240px;
   height: 100%;
   box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.asideComments h4 {
+  text-align: center;
+  margin: 0;
+  font-size: 18px;
+  color: #916f5b;
 }
 
 .swiper-section {
   height: 320px;
   padding: 0 120px;
+}
+
+.review-item {
+  max-width: 240px;
+  border: 1px solid #e0c7a0;
+  border-radius: 6px;
+  padding: 10px;
+  background-color: #fff5ee;
+  font-size: 14px;
+}
+
+.review-item p {
+  margin: 5px;
+}
+
+.review-item .review-score{
+  text-align: right;
+}
+
+.review-text {
+  display: -webkit-box;
+  line-clamp: inherit;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: normal;
+  flex-shrink: 1;
+  line-height: 1.3;
 }

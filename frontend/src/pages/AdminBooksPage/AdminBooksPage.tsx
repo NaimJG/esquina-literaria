@@ -19,6 +19,7 @@ export default function AdminBooksPage() {
   const [author, setAuthor] = useState("");
   const [genre, setGenre] = useState("");
   const [category, setCategory] = useState("");
+  const [publishDate, setDate] = useState("");
   const [preview, setPreview] = useState("");
   const [authors, setAuthors] = useState<string[]>([]);
   const [genres, setGenres] = useState<string[]>([]);
@@ -85,6 +86,7 @@ export default function AdminBooksPage() {
       setAuthor("");
       setGenre("");
       setCategory("");
+      setDate("");
     }
   }
 
@@ -104,6 +106,7 @@ export default function AdminBooksPage() {
         author: author.trim(),
         genre: genre.trim(),
         category: category.trim(),
+        publishDate: publishDate.trim(),
       });
 
       setMessage("✅ Libro agregado con éxito.");
@@ -113,6 +116,7 @@ export default function AdminBooksPage() {
       setAuthor("");
       setGenre("");
       setCategory("");
+      setDate("");
       setPreview("");
     } catch (err) {
       console.error("Error al crear libro:", err);
@@ -257,6 +261,15 @@ export default function AdminBooksPage() {
                     </ul>
                   )}
                 </div>
+
+                <label>Fecha de publicación *</label>
+                <input
+                  type="date"
+                  value={publishDate}
+                  onChange={(e) => setDate(e.target.value)}
+                  placeholder="Seleccioná la fecha de publicación..."
+                  required
+                />
 
                 <label>Portada (URL de la imagen)</label>
                 <input

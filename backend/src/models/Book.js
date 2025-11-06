@@ -7,7 +7,8 @@ const bookSchema = new mongoose.Schema({
     genre: { type: String, required: true },
     author: { type: String, required: true },
     cover: { type: String, required: false },
-    reviews: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Review' }]
+    reviews: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Review' }],
+    publishDate: { type: Date, required: true, default: Date.now },
 }, {
     toJSON: { virtuals: true },
     toObject: { virtuals: true }

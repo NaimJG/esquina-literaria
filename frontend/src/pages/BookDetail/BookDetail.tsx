@@ -127,6 +127,16 @@ function BookDetail() {
                             <h2>{book.author}</h2>
                             <p><strong>Género:</strong> {book.genre}</p>
                             <p><strong>Categoría:</strong> {book.category}</p>
+                            <p>
+                            <strong>Publicación:</strong>{" "}
+                            {book.publishDate
+                                ? new Date(book.publishDate).toLocaleDateString("es-AR", {
+                                    day: "2-digit",
+                                    month: "long",
+                                    year: "numeric",
+                                })
+                                : "Sin fecha"}
+                            </p>
                             <div className='score-general'>
                                 <div className='score-container'>
                                     <h3>Calificación General</h3>

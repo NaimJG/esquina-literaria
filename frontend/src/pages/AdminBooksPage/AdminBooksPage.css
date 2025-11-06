@@ -156,3 +156,8 @@
   cursor: default;
   font-style: italic;
 }
+
+.admin-book-form input[type="date"] {
+  appearance: none;
+  color-scheme: light;
+}
