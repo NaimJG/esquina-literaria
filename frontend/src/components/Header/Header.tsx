@@ -1,12 +1,24 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./Header.css";
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, useLocation } from 'react-router-dom';
 import { useAuth } from '../../context/useAuth';
 import Avatar from "@mui/material/Avatar";
 import { Tooltip } from "@mui/material";
+import { useSearch } from "../../context/SearchContext";
 
 function Header() {
   const { user } = useAuth();
+  const { searchQuery, setSearchQuery } = useSearch();
+  const [localQuery, setLocalQuery] = useState(searchQuery);
+  const location = useLocation();
+
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setSearchQuery(localQuery);
+    }, 300);
+
+    return () => clearTimeout(handler);
+  }, [localQuery, setSearchQuery]);
 
   function stringToColor(string: string) {
     let hash = 0;
@@ -46,6 +58,21 @@ function Header() {
               <img alt="AD" className="logoImg" src="/img/logo.png" />
             </div>
           </div>
+
+          {/* 🔍 Barra de búsqueda */}
+          {location.pathname === "/home" && (
+          <div className="searchBar">
+            <input
+              type="text"
+              id="searchBar"
+              name="searchBar"
+              placeholder="Buscar por título o autor..."
+              value={localQuery}
+              onChange={(e) => setLocalQuery(e.target.value)}
+            />
+          </div>
+          )}
+
           <div className='navItemsContainer'>
             <div className="authButtons">
               {user ? (

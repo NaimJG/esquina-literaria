@@ -9,13 +9,16 @@ import './index.css'
 import App from './App'
 import { BrowserRouter } from 'react-router-dom'
 import { AuthProvider } from './context/AuthContext'
+import { SearchProvider } from './context/SearchContext';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <BrowserRouter>
-      <AuthProvider>
-        <App />
-      </AuthProvider>
-    </BrowserRouter>
+    <SearchProvider>
+      <BrowserRouter>
+        <AuthProvider>
+          <App />
+        </AuthProvider>
+      </BrowserRouter>
+    </SearchProvider>
   </StrictMode>,
 )

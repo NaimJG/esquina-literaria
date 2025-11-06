@@ -8,6 +8,7 @@ import reviewService from '../../service/reviewService';
 import authorService from '../../service/authorService';
 import categoryService from '../../service/categoryService';
 import genreService from '../../service/genreService';
+import { useSearch } from '../../context/SearchContext';
 
 interface Review {
     _id: string;
@@ -29,109 +30,74 @@ function Catalogue() {
     const [categories, setCategories] = useState<string[]>([]);
     const [genres, setGenres] = useState<string[]>([]);
     const [authors, setAuthors] = useState<string[]>([]);
-    const [reviews, setReviews] = useState<Review[]>([]); // Corregido: Tipo y valor inicial
+    const [reviews, setReviews] = useState<Review[]>([]);
+    const { searchQuery } = useSearch();
 
     useEffect(() => {
-        const getCategories = async () => {
+        const fetchData = async () => {
             try {
-                const categoriesData = await categoryService.getAllCategories();
-                const categoryNames = categoriesData.map((category: { name: string }) => category.name);
-                setCategories(categoryNames);
-            } catch (error) {
-                console.error("Error al obtener las categorías.", error);
-            }
-        };
-        getCategories();
+                const [books, authorsData, categoriesData, genresData, reviewsData] =
+                await Promise.all([
+                    bookService.getAllBooks(),
+                    authorService.getAllAuthors(),
+                    categoryService.getAllCategories(),
+                    genreService.getAllGenres(),
+                    reviewService.getAllReviews(),
+                ]);
 
-    }, [])
-
-    useEffect(() => {
-        const getGenres = async () => {
-            try {
-                const genresData = await genreService.getAllGenres();
-                const genreNames = genresData.map((genre: { name: string }) => genre.name);
-                setGenres(genreNames);
-            } catch (error) {
-                console.error("Error al obtener los géneros.", error);
-            }
-        };
-        getGenres();
-
-    }, [])
-
-    useEffect(() => {
-        const getAuthors = async () => {
-            try {
-                const authorsData = await authorService.getAllAuthors();
-                const authorNames = authorsData.map((author: { name: string }) => author.name);
-                setAuthors(authorNames);
-            } catch (error) {
-                console.error("Error al obtener los géneros.", error);
-            }
-        };
-        getAuthors();
-
-    }, [])
-
-    useEffect(() => {
-        const getBooks = async () => {
-            try {
-                const books = await bookService.getAllBooks();
                 setAllBooks(books);
                 setFilteredBooks(books);
+                setAuthors(authorsData.map((author: { name: string }) => author.name));
+                setCategories(categoriesData.map((category: { name: string }) => category.name));
+                setGenres(genresData.map((genre: { name: string }) => genre.name));
+                setReviews(reviewsData);
             } catch (error) {
-                console.error("Error al obtener los libros.", error);
+                console.error("Error al cargar los datos:", error);
             }
         };
-
-        getBooks();
+        fetchData();
     }, []);
 
+    
+    // --- Filtrar libros cuando cambian filtros o búsqueda ---
     useEffect(() => {
         let booksToFilter = [...allBooks];
 
-        (Object.keys(filters) as Array<keyof ActiveFilters>).forEach(key => {
-            if (filters[key].length > 0) {
-                booksToFilter = booksToFilter.filter(book => {
-                    const bookValue = book[key as keyof Book];
-
-                    if (bookValue) {
-                        return filters[key].includes(bookValue as string);
-                    }
-                    return false;
-                });
+        // Filtrar por género, autor y categoría
+        (Object.keys(filters) as Array<keyof ActiveFilters>).forEach((key) => {
+            const activeValues = filters[key];
+            if (activeValues.length > 0) {
+                booksToFilter = booksToFilter.filter((book) =>
+                activeValues.includes(book[key] as string)
+                );
             }
         });
 
+        // Filtrar por texto de búsqueda
+        const query = searchQuery.trim().toLowerCase();
+        if (query) {
+            booksToFilter = booksToFilter.filter(
+                (book) =>
+                book.title.toLowerCase().includes(query) ||
+                book.author.toLowerCase().includes(query)
+            );
+        }
+
         setFilteredBooks(booksToFilter);
-    }, [filters, allBooks]);
+    }, [filters, allBooks, searchQuery]);
 
+    // --- Cambiar filtros ---
     const handleFilterChange = (category: keyof ActiveFilters, value: string) => {
-        setFilters(prevFilters => {
+        setFilters((prevFilters) => {
             const newCategoryFilters = [...prevFilters[category]];
-            const currentIndex = newCategoryFilters.indexOf(value);
+            const index = newCategoryFilters.indexOf(value);
 
-            if (currentIndex === -1) {
-                newCategoryFilters.push(value);
-            } else {
-                newCategoryFilters.splice(currentIndex, 1);
-            }
+            if (index === -1) newCategoryFilters.push(value);
+            else newCategoryFilters.splice(index, 1);
+
             return { ...prevFilters, [category]: newCategoryFilters };
         });
     };
-
-    useEffect(() => {
-        const getReviews = async () => {
-            try {
-                const reviewsData = await reviewService.getAllReviews();
-                setReviews(reviewsData);
-            } catch (error) {
-                console.error("Error al obtener las reseñas.", error);
-            }
-        };
-        getReviews();
-    }, []);
-
 
     return (
         <>
