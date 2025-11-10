@@ -50,4 +50,55 @@ const getReviewsForBook = async (bookId) => {
   return reviews;
 };
 
-module.exports = { createReview, getReviewsForBook };
+const getSortedReviews = async () => {
+  const reviews = await Review.find({}).sort({ scoreDate: -1, score: -1 }).populate('user', 'username').populate('book', 'title');
+  return reviews;
+};
+
+const getReviewsByUser = async (userId, page = 1, limit = 5) => {
+  const skip = (page - 1) * limit;
+
+  const [reviews, total] = await Promise.all([
+    Review.find({ user: userId })
+      .populate('book', 'title author cover synopsis genre category score')
+      .sort({ scoreDate: -1 })
+      .skip(skip)
+      .limit(limit)
+      .lean(),
+    Review.countDocuments({ user: userId }),
+  ]);
+
+  return {
+    reviews,
+    totalPages: Math.ceil(total / limit) || 1,
+    totalReviews: total,
+  };
+};
+
+const updateReview = async (reviewId, updatedData) => {
+  const review = await Review.findById(reviewId);
+  if (!review) throw new Error("La reseña no existe.");
+
+  // Actualizamos solo los campos permitidos
+  if (updatedData.comment !== undefined) review.comment = updatedData.comment;
+  if (updatedData.score !== undefined) review.score = updatedData.score;
+  review.scoreDate = updatedData.scoreDate || new Date(); // Actualizamos la fecha del comentario por la nueva
+
+  await review.save();
+  return review;
+};
+
+const deleteReview = async (reviewId) => {
+  const review = await Review.findById(reviewId);
+  if (!review) throw new Error("La reseña no existe.");
+
+  // Quitamos referencia del libro
+  await Book.findByIdAndUpdate(review.book, {
+    $pull: { reviews: review._id },
+  });
+
+  await Review.findByIdAndDelete(reviewId);
+  return true;
+};
+
+module.exports = { createReview, getReviewsForBook, getSortedReviews, getReviewsByUser, updateReview, deleteReview };

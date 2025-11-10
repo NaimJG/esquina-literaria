@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 
 // 1. Importaciones de Swiper
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -9,25 +10,50 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 
+import bookService from "../../service/bookService";
+
 function SwiperComponent() {
+
+  const [topBooks, setTopBooks] = useState([]);
+
+  useEffect(() => {
+    const fetchTopBooks = async () => {
+      try {
+        const books = await bookService.getTopCommentedBooks();
+        console.log('Swiper: fetched top books', books);
+        setTopBooks(books);
+      } catch (error) {
+        console.error("Error al obtener los libros más comentados:", error);
+      }
+    };
+    fetchTopBooks();
+  }, []);
+
   return (
-    <div className='swiper-container'>
+    <div className="swiper-container">
       <Swiper
         modules={[Navigation, Pagination]}
         spaceBetween={20}
         slidesPerView={4}
         navigation
+        autoplay={{ delay: 3000, disableOnInteraction: false }}
+        pagination={{ clickable: true }}
+        style={{ padding: '15px' }}
       >
-        <SwiperSlide><div style={{ background: '#9cf', height: 150 }}>Slide 1</div></SwiperSlide>
-        <SwiperSlide><div style={{ background: '#c9f', height: 150 }}>Slide 2</div></SwiperSlide>
-        <SwiperSlide><div style={{ background: '#fc9', height: 150 }}>Slide 3</div></SwiperSlide>
-        <SwiperSlide><div style={{ background: '#9fc', height: 150 }}>Slide 4</div></SwiperSlide>
-        <SwiperSlide><div style={{ background: '#e07f7f', height: 150 }}>Slide 5</div></SwiperSlide>
-        <SwiperSlide><div style={{ background: '#d396f0', height: 150 }}>Slide 6</div></SwiperSlide>
-        <SwiperSlide><div style={{ background: '#8d8fee', height: 150 }}>Slide 7</div></SwiperSlide>
-        <SwiperSlide><div style={{ background: '#e5f7a4', height: 150 }}>Slide 8</div></SwiperSlide>
-        <SwiperSlide><div style={{ background: '#f7b3b3', height: 150 }}>Slide 9</div></SwiperSlide>
-        <SwiperSlide><div style={{ background: '#a5f8b1', height: 150 }}>Slide 10</div></SwiperSlide>
+        {topBooks.map((book) => (
+          <SwiperSlide key={book.id}>
+            <div className="swiper-slide-content">
+              <Link to={`/books/${book.id}`} className="swiper-book-link">
+                <img
+                  src={book.cover}
+                  alt={book.title}
+                  className="swiper-cover"
+                />
+                <p className="swiper-title">{book.title}</p>
+              </Link>
+            </div>
+          </SwiperSlide>
+        ))}
       </Swiper>
     </div>
   );

@@ -15,7 +15,7 @@ function BookCard({ libro }: BookCardProps) {
         <Box sx={{ display: 'flex', height: 200, flexDirection: 'column' }}>
         <CardContent sx={{ flex: '1 0 auto' }}>
           <Typography gutterBottom variant="h5" component="div">
-            {libro.titulo}
+            {libro.title}
           </Typography>
           <Typography variant="body2" sx={{ color: 'text.secondary' }}>
             Lizards are a widespread group of squamate reptiles, with over 6,000

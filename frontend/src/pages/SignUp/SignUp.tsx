@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import './SignUp.css';
 import userService from '../../service/userService';
 import * as React from 'react';
+import { useAuth } from '../../context/useAuth';
 
 function SignUp() {
   const [formData, setFormData] = useState({
@@ -12,6 +13,7 @@ function SignUp() {
   });
   const [confirmEmail, setConfirmEmail] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const { login } = useAuth();
   const navigate = useNavigate();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -44,6 +46,7 @@ function SignUp() {
     try {
       await userService.registerUser(userData);
       alert('¡Registro exitoso!');
+      login(userData);
       navigate('/home');
     } catch (error) {
       console.error("Error en el registro:", error);

@@ -1,3 +1,5 @@
+import type { Review } from './Review';
+
 export interface Book {
   id: string;
   title: string;
@@ -7,20 +9,9 @@ export interface Book {
   author: string;
   score: number;
   cover: string;
-  reviews: Review[];
-}
-
-export interface Review{
-  _id: string;
-  score: number;
-  comment: string;
-  user: User;
-  scoreDate: Date;
-}
-
-export interface User{
-  id: string;
-  username: string
+  reviews?: Review[];
+  publishDate: Date;
+  reviewCount: number;
 }
 
 export interface BookCardProps {

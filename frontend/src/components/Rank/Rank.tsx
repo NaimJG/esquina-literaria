@@ -1,5 +1,3 @@
-import React from 'react';
-import BookCard from '../BookCard/BookCard';
 import './Rank.css';
 
 

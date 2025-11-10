@@ -1,20 +1,24 @@
-import React from "react";
+import { useEffect, useState } from "react";
 import "./Header.css";
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, useLocation } from 'react-router-dom';
 import { useAuth } from '../../context/useAuth';
 import Avatar from "@mui/material/Avatar";
 import { Tooltip } from "@mui/material";
-import { useLocation } from "react-router-dom";
+import { useSearch } from "../../context/SearchContext";
 
 function Header() {
   const { user } = useAuth();
-  const logoPath = user ? "/home" : "/";
+  const { searchQuery, setSearchQuery } = useSearch();
+  const [localQuery, setLocalQuery] = useState(searchQuery);
   const location = useLocation();
 
-  // Determinar active basándonos también en location.state
-  const state = (location.state as { showLogin?: boolean; showRegister?: boolean } | null) ?? null;
-  const isLoginActive = location.pathname === '/' && !!state?.showLogin;
-  const isRegisterActive = location.pathname === '/' && !!state?.showRegister;
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setSearchQuery(localQuery);
+    }, 300);
+
+    return () => clearTimeout(handler);
+  }, [localQuery, setSearchQuery]);
 
   function stringToColor(string: string) {
     let hash = 0;
@@ -50,26 +54,34 @@ function Header() {
       <nav className='navbar'>
         <div className="navContent">
           <div className="logoContainer">
-            <Link className='logoLink' to={logoPath}>
+            <div className='logoLink'>
               <img alt="AD" className="logoImg" src="/img/logo.png" />
-            </Link>
+            </div>
           </div>
+
+          {/* 🔍 Barra de búsqueda */}
+          {location.pathname === "/home" && (
+          <div className="searchBar">
+            <input
+              type="text"
+              id="searchBar"
+              name="searchBar"
+              placeholder="Buscar por título o autor..."
+              value={localQuery}
+              onChange={(e) => setLocalQuery(e.target.value)}
+            />
+          </div>
+          )}
+
           <div className='navItemsContainer'>
             <div className="authButtons">
-              <ul className='navList'>
-                <li><NavLink to="/home" className={({ isActive }) => isActive ? 'nav-active' : 'nav-li'}>Explorar</NavLink></li>
-              </ul>
               {user ? (
                 <>
-                  <ul className='navList navCart' style={{ alignItems: 'center' }}>
-{/*                     <li className="cartContainer">
-                      <Tooltip title="Carrito">
-                        <ShoppingCartIcon></ShoppingCartIcon>
-                      </Tooltip>
-                    </li> */}
-                    <li>
-                      <Tooltip title="Ver Perfil">
-                        <NavLink to="/profile">
+                  <ul className='navList navCart'>
+                    <li><NavLink to="/home" className={({ isActive }) => isActive ? 'nav-active' : 'nav-li'}>Explorar</NavLink></li>
+                    <li style={{ alignSelf: 'center' }}>
+                      <Tooltip title={user.role === "admin" ? "Panel de administrador" : "Ver perfil"}>
+                        <NavLink to={user.role === "admin" ? "/admin/books" : "/profile"}>
                           <Avatar {...stringAvatar(user.username)} />
                         </NavLink>
                       </Tooltip>
@@ -78,26 +90,12 @@ function Header() {
                 </>
               ) : (
                 <>
-                <ul className='navList' style={{ justifyContent: 'flex-end' }}>
-                  <li>
-                    <NavLink
-                      to="/"
-                      state={{ showRegister: true }}
-                      className={() => isRegisterActive ? 'nav-active' : 'nav-li'}
-                    >
-                      Registrarse
-                    </NavLink>
-                  </li>
-                  <li>
-                    <NavLink
-                      to="/"
-                      state={{ showLogin: true }}
-                      className={() => isLoginActive ? 'nav-active' : 'nav-li'}
-                    >
-                      Ingresar
-                    </NavLink>
-                  </li>
-                </ul>
+                  <Link to="/signup" className='signButton'>
+                    Registrarse
+                  </Link>
+                  <Link to="/login" className='loginButton'>
+                    Ingresar
+                  </Link>
                 </>
               )}
             </div>

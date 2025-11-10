@@ -37,7 +37,7 @@ function Home() {
                   </div>
                   <div className='buttonsContainer'>
                     <Link to="/home" className='loginGuestButton'>
-                      Ingresar como invitado
+                      ¡Comienza a explorar!
                     </Link>
                   </div>
                 </div>

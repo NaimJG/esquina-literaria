@@ -1,15 +1,14 @@
-import React from 'react';
 import type { Book } from '../../types/Book';
 import BookCard from '../BookCard/BookCard';
 
 interface LibraryProps {
-  books: Book[];
+  books?: Book[];
 }
 
 function Library({ books }: LibraryProps) {
   return (
     <>
-      {books.map(libro => (
+      {books?.map(libro => (
         <BookCard key={libro.id} libro={libro} />
       ))}
     </>

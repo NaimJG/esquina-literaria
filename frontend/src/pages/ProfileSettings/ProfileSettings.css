@@ -1,0 +1,132 @@
+.profile-settings-container {
+  position: relative;
+  min-width: 600px;
+  margin: 120px auto;
+  padding: 32px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.settings-back-button {
+  position: absolute;
+  top: 24px !important;
+  left: 24px !important;
+  background: transparent;
+  border: none;
+  color: #916f5b;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  transition: color 0.2s, transform 0.2s;
+}
+
+.back-button:hover {
+  color: #6d4c2e;
+  transform: translateX(-2px);
+}
+
+.profile-settings-container h2 {
+  font-size: 2rem;
+  color: #916f5b;
+  margin-bottom: 32px;
+}
+
+.settings-section {
+  margin-bottom: 40px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid #f1dec9;
+  scroll-margin-top: 100px;
+}
+
+.settings-section:last-child {
+  border-bottom: none;
+}
+
+.settings-section h3 {
+  font-size: 1.2rem;
+  color: #6d4c2e;
+  margin-bottom: 16px;
+}
+
+.settings-section form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.settings-section label {
+  text-align: left;
+  font-weight: 500;
+  color: #916f5b;
+}
+
+.settings-section input[type="text"],
+.settings-section input[type="email"],
+.settings-section input[type="password"] {
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #e0c7a0;
+  font-size: 16px;
+}
+
+.settings-section input[type="color"] {
+  width: 48px;
+  height: 32px;
+  border: none;
+  background: transparent;
+  margin-bottom: 8px;
+}
+
+.settings-section button {
+  background: #0e7c86;
+  width: 200px;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 0;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 8px;
+  transition: background 0.2s;
+  align-self: center;
+}
+
+.settings-section button:hover {
+  background: #6d4c2e;
+}
+
+
+/* --- Datos del usuario --- */
+.user-info {
+  margin-bottom: 40px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid #f1dec9;
+}
+
+.user-info h3 {
+  font-size: 1.2rem;
+  color: #6d4c2e;
+  margin-bottom: 16px;
+}
+
+.user-info-content {
+  background: #fff8f1;
+  border: 1px solid #f1dec9;
+  border-radius: 8px;
+  padding: 16px 20px;
+}
+
+.user-info-content p {
+  margin: 8px 0;
+  font-size: 16px;
+  color: #6d4c2e;
+}
+
+.user-info-content strong {
+  color: #916f5b;
+}

@@ -1,7 +1,10 @@
 const Book = require("../models/Book");
+const Category = require("../models/Category");
+const Genre = require("../models/Genre");
+const Author = require("../models/Author");
 
 const createBook = async (bookData) => {
-  const { title, synopsis, author, category, genre, cover } = bookData;
+  const { title, synopsis, author, category, genre, cover, publishDate } = bookData;
 
   const existingBook = await Book.findOne({ title, author });
 
@@ -11,13 +14,34 @@ const createBook = async (bookData) => {
     throw error;
   }
 
+  let authorDoc = await Author.findOne({ name: author });
+  if (!authorDoc) {
+    authorDoc = new Author({ name: author });
+    await authorDoc.save();
+  }
+
+  let categoryDoc = await Category.findOne({ name: category });
+  if (!categoryDoc) {
+    categoryDoc = new Category({ name: category });
+    await categoryDoc.save();
+  }
+
+  // Verificar o crear Genre
+  let genreDoc = await Genre.findOne({ name: genre });
+  if (!genreDoc) {
+    genreDoc = new Genre({ name: genre });
+    await genreDoc.save();
+  }
+
+  // Crear el libro con las referencias
   const newBook = new Book({
     title,
     synopsis,
-    author,
-    category,
-    genre,
+    author: authorDoc.name,
+    category: categoryDoc.name,
+    genre: genreDoc.name,
     cover,
+    publishDate,
   });
 
   await newBook.save();
@@ -48,6 +72,8 @@ const getAllBooks = async () => {
     genre: book.genre ? book.genre : 'N/A',
     score: book.averageScore || 0,
     cover: book.cover || 'N/A',
+    publishDate: book.publishDate || null,
+    reviewCount: book.reviews?.length || 0,
   }));
 
   return formattedBooks;
@@ -77,6 +103,7 @@ const getBookById = async (bookId) => {
     genre: book.genre ? book.genre : 'N/A',
     score: book.averageScore || 0,
     cover: book.cover || 'N/A',
+    publishDate: book.publishDate,
     reviews: book.reviews
   });
 
