@@ -15,6 +15,7 @@ const BookSorter: React.FC<BookSorterProps> = ({ sortOption, onSortChange }) => 
   return (
     <Accordion
       disableGutters
+      expanded='true'
       sx={{
         borderRadius: "5px",
         backgroundColor: "transparent",
@@ -22,36 +23,6 @@ const BookSorter: React.FC<BookSorterProps> = ({ sortOption, onSortChange }) => 
         "&:before": { display: "none" },
       }}
     >
-      <AccordionSummary
-        expandIcon={<ExpandMoreIcon />}
-        aria-controls="panel-sorter-content"
-        id="panel-sorter-header"
-        sx={{
-          minHeight: "48px",
-          "&.Mui-expanded": { minHeight: "48px" },
-          "& .MuiAccordionSummary-content.Mui-expanded": { margin: 0 },
-        }}
-      >
-        <Typography
-          sx={{
-            fontSize: "14px",
-            fontWeight: "500",
-            fontFamily: "Poppins",
-          }}
-          component="span"
-        >
-          Ordenamiento
-        </Typography>
-      </AccordionSummary>
-
-      <AccordionDetails
-        sx={{
-          padding: "0 16px 8px 16px",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "flex-start",
-        }}
-      >
         <FormControl fullWidth size="small">
           <Select
             value={sortOption}
@@ -81,7 +52,6 @@ const BookSorter: React.FC<BookSorterProps> = ({ sortOption, onSortChange }) => 
             <MenuItem value="lowestScore">Puntaje más bajo</MenuItem>
           </Select>
         </FormControl>
-      </AccordionDetails>
     </Accordion>
   );
 };
