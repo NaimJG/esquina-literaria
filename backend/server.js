@@ -22,9 +22,20 @@ const allowedOrigins = [
 
 // Middlewares
 app.use(cors({
-  origin: allowedOrigins,
-  credentials: true
-}));
+  origin: function (origin, callback) {
+      // Permitir requests sin origin (como en Postman o server-side)
+      if (!origin) return callback(null, true);
+
+      if (allowedOrigins.includes(origin) || /\.vercel\.app$/.test(origin)) {
+        callback(null, true);
+      } else {
+        console.log("❌ CORS bloqueado para:", origin);
+        callback(new Error("No permitido por CORS"));
+      }
+    },
+    credentials: true,
+  })
+);
 app.use(express.json());
 
 // Rutas de prueba
