@@ -37,7 +37,7 @@ const createBook = async (bookData) => {
   const newBook = new Book({
     title,
     synopsis,
-    author,
+    author: authorDoc.name,
     category: categoryDoc.name,
     genre: genreDoc.name,
     cover,
