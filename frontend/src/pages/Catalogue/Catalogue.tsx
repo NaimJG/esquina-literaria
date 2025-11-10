@@ -39,13 +39,13 @@ function Catalogue() {
         const fetchData = async () => {
             try {
                 const [books, authorsData, categoriesData, genresData, reviewsData] =
-                await Promise.all([
-                    bookService.getAllBooks(),
-                    authorService.getAllAuthors(),
-                    categoryService.getAllCategories(),
-                    genreService.getAllGenres(),
-                    reviewService.getAllReviews(),
-                ]);
+                    await Promise.all([
+                        bookService.getAllBooks(),
+                        authorService.getAllAuthors(),
+                        categoryService.getAllCategories(),
+                        genreService.getAllGenres(),
+                        reviewService.getAllReviews(),
+                    ]);
 
                 setAllBooks(books);
                 setFilteredBooks(books);
@@ -60,7 +60,7 @@ function Catalogue() {
         fetchData();
     }, []);
 
-    
+
     // --- Filtrar libros cuando cambian filtros o búsqueda ---
     useEffect(() => {
         let booksToFilter = [...allBooks];
@@ -97,7 +97,7 @@ function Catalogue() {
                 booksToFilter.sort(
                     (a, b) => new Date(a.publishDate).getTime() - new Date(b.publishDate).getTime()
                 );
-            break;
+                break;
             case "dateDesc":
                 booksToFilter.sort(
                     (a, b) => new Date(b.publishDate).getTime() - new Date(a.publishDate).getTime()
@@ -109,7 +109,7 @@ function Catalogue() {
             case "lowestScore":
                 booksToFilter.sort((a, b) => a.score - b.score);
                 break;
-    }
+        }
 
         setFilteredBooks(booksToFilter);
     }, [filters, allBooks, searchQuery, sortOption]);
@@ -130,12 +130,12 @@ function Catalogue() {
         <>
             <section className='catalogueContainer'>
                 <aside className='catalogueAside'>
+                    <h4 style={{ marginTop: '10px' }}>Ordenamiento</h4>
+                    <BookSorter sortOption={sortOption} onSortChange={setSortOption} />
                     <h4>Filtrar libros</h4>
                     <BookSidebar title="genre" displayName="Género" items={genres} selectedItems={filters.genre} onFilterChange={handleFilterChange} />
                     <BookSidebar title="author" displayName="Autor" items={authors} selectedItems={filters.author} onFilterChange={handleFilterChange} />
                     <BookSidebar title="category" displayName="Categoría" items={categories} selectedItems={filters.category} onFilterChange={handleFilterChange} />
-                    <h4 style={{ marginTop: '10px' }}>Ordenamiento</h4>
-                    <BookSorter sortOption={sortOption} onSortChange={setSortOption} />
                 </aside>
                 <section className='catalogueMain'>
                     <div className='books'>
@@ -143,15 +143,15 @@ function Catalogue() {
                     </div>
                 </section>
                 <aside className='asideComments'>
-                <h4>Últimas Reseñas</h4>
-                {reviews.slice(0, 5).map((review) => (
-                    <div key={review._id} className="review-item">
-                        <p className="review-book"><strong>{review.book.title}</strong></p>
-                        <p className="review-comment"><span className="review-text">"{review.comment}"</span> -<em>{review.user.username}</em></p>
-                        <p className="review-score">{review.score}★</p>
-                    </div>
+                    <h4>Últimas Reseñas</h4>
+                    {reviews.slice(0, 5).map((review) => (
+                        <div key={review._id} className="review-item">
+                            <p className="review-book"><strong>{review.book.title}</strong></p>
+                            <p className="review-comment"><span className="review-text">"{review.comment}"</span> -<em>{review.user.username}</em></p>
+                            <p className="review-score">{review.score}★</p>
+                        </div>
                     ))
-                }
+                    }
                 </aside>
             </section>
         </>
