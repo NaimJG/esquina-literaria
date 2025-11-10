@@ -1,6 +1,7 @@
 const Book = require("../models/Book");
 const Category = require("../models/Category");
 const Genre = require("../models/Genre");
+const Author = require("../models/Author");
 
 const createBook = async (bookData) => {
   const { title, synopsis, author, category, genre, cover, publishDate } = bookData;
@@ -11,6 +12,12 @@ const createBook = async (bookData) => {
     const error = new Error("Ya existe un libro con el mismo título y autor.");
     error.status = 409;
     throw error;
+  }
+
+  let authorDoc = await Author.findOne({ name: author });
+  if (!authorDoc) {
+    authorDoc = new Author({ name: author });
+    await authorDoc.save();
   }
 
   let categoryDoc = await Category.findOne({ name: category });
