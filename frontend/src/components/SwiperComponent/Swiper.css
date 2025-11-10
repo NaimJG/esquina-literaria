@@ -1,7 +1,81 @@
-.swiper-container{
-    width: 100%;
-    display: flex;
-    flex-grow: 1;
-    align-items: center;
-    box-sizing: border-box;
+.swiper-container {
+  width: 100%;
+}
+
+.swiper-slide-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.swiper-cover {
+  width: 100%;
+  height: 260px;
+  object-fit: cover;
+  border-radius: 8px;
+  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.25);
+  transition: transform 0.3s;
+}
+
+.swiper-cover:hover {
+  transform: scale(1.05);
+}
+
+.swiper-title {
+  margin-top: 8px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #333;
+}
+
+/* === Flechas personalizadas === */
+.swiper-button-next,
+.swiper-button-prev {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  color: #916f5b !important; /* tu tono marrón elegante */
+  background: rgba(255, 255, 255, 0.8) !important;
+  border-radius: 50% !important;
+  width: 42px !important;
+  height: 42px !important;
+  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.15) !important;
+  transition: all 0.3s ease !important;
+}
+
+/* ícono SVG */
+.swiper-button-prev svg,
+.swiper-button-next svg {
+  width: 25px !important;      /* tamaño del ícono */
+  height: 30px !important;
+  fill: currentColor;
+  pointer-events: none;
+  transform: translateY(0.5px); /* ajuste óptico */
+}
+
+/* Hover: fondo con leve efecto */
+.swiper-button-next:hover,
+.swiper-button-prev:hover {
+  background: #0e7c86 !important;
+  color: white !important;
+  transform: scale(1.1) !important;
+}
+
+/* Posicionamiento más cercano al contenido */
+.swiper-button-next {
+  right: 10px !important;
+  top: 150px !important;
+}
+.swiper-button-prev {
+  left: 10px !important;
+  top: 150px !important;
+}
+
+/* Opcional: ocultarlas en pantallas pequeñas */
+@media (max-width: 768px) {
+  .swiper-button-next,
+  .swiper-button-prev {
+    display: none !important;
+  }
 }

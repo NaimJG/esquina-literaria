@@ -1,10 +1,12 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import bookService from '../../service/bookService';
 import reviewService from '../../service/reviewService';
 import type { Book } from '../../types/Book';
 import './BookDetail.css';
 import { Box, Button, Rating, Modal, TextField, Typography, Alert } from '@mui/material';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useAuth } from '../../context/useAuth';
 
 const style = {
@@ -32,6 +34,12 @@ function BookDetail() {
     const [showUserAlert, setShowUserAlert] = useState(false);
     const [showErrorAlert, setShowErrorAlert] = useState(false);
     const [validationError, setValidationError] = useState(false);
+    const navigate = useNavigate();
+
+    const handleBack = () => {
+        navigate('/home');
+    } 
+
 
     const handleOpen = () => setOpen(true);
     const handleClose = () => {
@@ -109,6 +117,9 @@ function BookDetail() {
 
     return (
         <>
+            <button className="back-button" onClick={handleBack}>
+                <ArrowBackIcon /> Volver
+            </button>
             {showErrorAlert && (
                 <Alert
                     severity="error"

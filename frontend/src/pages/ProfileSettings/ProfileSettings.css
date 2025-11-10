@@ -8,10 +8,10 @@
   box-shadow: 0 2px 8px rgba(0,0,0,0.08);
 }
 
-.back-button {
+.settings-back-button {
   position: absolute;
-  top: 24px;
-  left: 24px;
+  top: 24px !important;
+  left: 24px !important;
   background: transparent;
   border: none;
   color: #916f5b;

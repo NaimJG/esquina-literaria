@@ -316,12 +316,12 @@ export default function AdminBooksPage() {
             <li className='listElement'>
               <Link to="/profile/settings#password">Cambiar contraseña</Link>
             </li>
-            <li className='listElement'>
+            {/* <li className='listElement'>
               <Link to="/profile/settings#color">Cambiar color de mi página</Link>
             </li>
             <li className='listElement'>
               <Link to="/profile/settings#icon">Cambiar icono del perfil</Link>
-            </li>
+            </li> */}
             <li className='listButton'>
               <button onClick={handleLogout} className="logoutButton">
                 Cerrar sesión

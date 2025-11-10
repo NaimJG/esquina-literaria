@@ -127,3 +127,19 @@
         margin: 0;
     }
 }
+
+.back-button {
+  position: absolute;
+  top: 124px;
+  left: 124px;
+  background: transparent;
+  border: none;
+  color: #916f5b;
+  font-size: 20px !important;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  transition: color 0.2s, transform 0.2s;
+}

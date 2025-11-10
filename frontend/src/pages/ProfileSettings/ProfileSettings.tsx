@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import './ProfileSettings.css';
 import { useAuth } from '../../context/useAuth';
 import userService from '../../service/userService';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 export default function ProfileSettings() {
   const location = useLocation();
@@ -110,7 +111,7 @@ export default function ProfileSettings() {
 
   return (
     <section className="profile-settings-container">
-      <button className="back-button" onClick={handleBack}>← Volver</button>
+      <button className="settings-back-button" onClick={handleBack}><ArrowBackIcon /> Volver</button>
       <h2>Ajustes de cuenta</h2>
 
       {/* --- Datos actuales del usuario --- */}
@@ -179,8 +180,9 @@ export default function ProfileSettings() {
         </form>
       </div>
 
+      {/* 
       <h2>Ajustes de tu página</h2>
-      {/* --- Cambiar color --- */}
+      
       <div id="color" ref={colorRef} className="settings-section">
         <h3>Cambiar color de la página</h3>
         <form>
@@ -190,7 +192,6 @@ export default function ProfileSettings() {
         </form>
       </div>
 
-      {/* --- Cambiar icono --- */}
       <div id="icon" ref={iconRef} className="settings-section">
         <h3>Cambiar icono del perfil</h3>
         <form>
@@ -198,7 +199,8 @@ export default function ProfileSettings() {
           <input id="iconInput" type="text" name="icon" placeholder="https://..." />
           <button type="submit">Guardar icono</button>
         </form>
-      </div>
+      </div> 
+      */}
     </section>
   );
 }
