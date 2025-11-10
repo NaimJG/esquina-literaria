@@ -15,8 +15,16 @@ connectDB();
 
 const app = express();
 
+const allowedOrigins = [
+  "http://localhost:3000", // desarrollo
+  "https://esquinaliteraria-frontend.vercel.app" // producción
+];
+
 // Middlewares
-app.use(cors());
+app.use(cors({
+  origin: allowedOrigins,
+  credentials: true
+}));
 app.use(express.json());
 
 // Rutas de prueba

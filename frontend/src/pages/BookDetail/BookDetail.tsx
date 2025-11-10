@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import bookService from '../../service/bookService';
@@ -210,7 +210,7 @@ function BookDetail() {
                         <Rating
                             name="simple-controlled"
                             value={rating}
-                            onChange={(event, newValue) => {
+                            onChange={(_event, newValue) => {
                                 setRating(newValue);
                                 setValidationError(false); // Hide error on change
                             }}

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import './Catalogue.css';
 import BookSidebar from '../../components/BookSidebar/BookSidebar';
 import Library from '../../components/Library/Library';

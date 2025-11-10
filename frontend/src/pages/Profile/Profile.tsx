@@ -235,7 +235,7 @@ function Profile() {
                 <Rating
                   name="scoreInput"
                   value={score}
-                  onChange={(event, newValue) => setScore(newValue || 0)}
+                  onChange={(_event, newValue) => setScore(newValue || 0)}
                   precision={1}
                   size="large"
                 />
@@ -288,7 +288,7 @@ function Profile() {
                           <label>Puntaje:</label>
                           <Rating
                             value={editScore}
-                            onChange={(e, val) => setEditScore(val || 0)}
+                            onChange={(_e, val) => setEditScore(val || 0)}
                             size="large"
                           />
                         </div>
