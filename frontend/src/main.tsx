@@ -7,18 +7,18 @@ import '@fontsource/poppins/600.css';
 import '@fontsource/poppins/700.css';
 import './index.css'
 import App from './App'
-import { BrowserRouter } from 'react-router-dom'
+import { HashRouter } from 'react-router-dom'
 import { AuthProvider } from './context/AuthContext'
 import { SearchProvider } from './context/SearchContext';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <SearchProvider>
-      <BrowserRouter>
+      <HashRouter>
         <AuthProvider>
           <App />
         </AuthProvider>
-      </BrowserRouter>
+      </HashRouter>
     </SearchProvider>
   </StrictMode>,
 )
