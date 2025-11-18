@@ -7,13 +7,13 @@ import type { BookFilter } from '../../types/Book';
 
 interface BookSidebarProps {
     title: keyof BookFilter;
-    displayName: string; // Add displayName prop
+    displayName: string;
     items: string[];
     selectedItems: string[];
     onFilterChange: (category: keyof BookFilter, value: string) => void;
 }
 
-function BookSidebar({ title, displayName, items, selectedItems, onFilterChange }: BookSidebarProps) { // Destructure displayName
+function BookSidebar({ title, displayName, items, selectedItems, onFilterChange }: BookSidebarProps) {
 
     const handleToggle = (value: string) => () => {
         onFilterChange(title, value);
@@ -25,7 +25,6 @@ function BookSidebar({ title, displayName, items, selectedItems, onFilterChange 
                 sx={{
                     borderRadius: '5px',
                     backgroundColor: 'transparent',
-                    // Forzar la eliminación del borde superior
                     '&:before': {
                         display: 'none',
                     },
@@ -45,7 +44,6 @@ function BookSidebar({ title, displayName, items, selectedItems, onFilterChange 
                         },
                     }}
                 >
-                    {/* Use displayName for display and remove capitalize */}
                     <Typography sx={{fontSize: '14px', fontWeight: '500', fontFamily: 'Poppins'}} component="span">{displayName}</Typography>
                 </AccordionSummary>
                 <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'transparent' }}>

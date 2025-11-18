@@ -3,7 +3,6 @@ import type { BookCardProps } from '../../types/Book';
 import { Box, Button, Card, CardActions, CardContent, CardMedia, Typography } from '@mui/material';
 
 function BookCard({ libro }: BookCardProps) {
-  // Ahora podemos acceder a todas las propiedades de 'libro' directamente.
   return (
     <>
       <Card sx={{ maxWidth: 600, height: '100%', display: 'flex' }}>

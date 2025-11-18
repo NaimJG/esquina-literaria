@@ -114,7 +114,6 @@ export default function ProfileSettings() {
       <button className="settings-back-button" onClick={handleBack}><ArrowBackIcon /> Volver</button>
       <h2>Ajustes de cuenta</h2>
 
-      {/* --- Datos actuales del usuario --- */}
       <div className="user-info">
         <h3>Datos actuales del usuario</h3>
         <div className="user-info-content">
@@ -125,7 +124,6 @@ export default function ProfileSettings() {
         </div>
       </div>
 
-      {/* --- Cambiar email --- */}
       <div id="email" ref={emailRef} className="settings-section">
         <h3>Cambiar email</h3>
         <form onSubmit={handleEmailChange}>
@@ -141,7 +139,6 @@ export default function ProfileSettings() {
         </form>
       </div>
 
-      {/* --- Cambiar nombre --- */}
       <div id="name" ref={nameRef} className="settings-section">
         <h3>Cambiar nombre de usuario</h3>
         <form onSubmit={handleUsernameChange}>
@@ -157,7 +154,6 @@ export default function ProfileSettings() {
         </form>
       </div>
 
-      {/* --- Cambiar contraseña --- */}
       <div id="password" ref={passwordRef} className="settings-section">
         <h3>Cambiar contraseña</h3>
         <form onSubmit={handlePasswordChange}>
@@ -180,27 +176,6 @@ export default function ProfileSettings() {
         </form>
       </div>
 
-      {/* 
-      <h2>Ajustes de tu página</h2>
-      
-      <div id="color" ref={colorRef} className="settings-section">
-        <h3>Cambiar color de la página</h3>
-        <form>
-          <label htmlFor="colorInput">Color principal:</label>
-          <input id="colorInput" type="color" name="color" defaultValue="#916f5b" />
-          <button type="submit">Guardar color</button>
-        </form>
-      </div>
-
-      <div id="icon" ref={iconRef} className="settings-section">
-        <h3>Cambiar icono del perfil</h3>
-        <form>
-          <label htmlFor="iconInput">URL del icono:</label>
-          <input id="iconInput" type="text" name="icon" placeholder="https://..." />
-          <button type="submit">Guardar icono</button>
-        </form>
-      </div> 
-      */}
     </section>
   );
 }

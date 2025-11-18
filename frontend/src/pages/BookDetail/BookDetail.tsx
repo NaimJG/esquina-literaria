@@ -44,7 +44,7 @@ function BookDetail() {
     const handleOpen = () => setOpen(true);
     const handleClose = () => {
         setOpen(false);
-        setValidationError(false); // Reset validation error on close
+        setValidationError(false);
     }
 
     const errorUser = () => {
@@ -212,7 +212,7 @@ function BookDetail() {
                             value={rating}
                             onChange={(_event, newValue) => {
                                 setRating(newValue);
-                                setValidationError(false); // Hide error on change
+                                setValidationError(false);
                             }}
                         />
                         <TextField
@@ -223,7 +223,7 @@ function BookDetail() {
                             value={comment}
                             onChange={(e) => {
                                 setComment(e.target.value);
-                                setValidationError(false); // Hide error on change
+                                setValidationError(false); 
                             }}
                             fullWidth
                         />

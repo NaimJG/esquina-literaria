@@ -3,19 +3,16 @@ import './Login.css';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/useAuth';
 import userService from '../../service/userService';
+import { Alert } from '@mui/material';
 
 function Login() {
 
   const [formData, setFormData] = useState({ username: '', password: '' });
-  // const [alert, setAlert] = useState({ show: false, message: "", type: "" });
+  const [validationError, setValidationError] = useState<string | null>(null);
+  const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const navigate = useNavigate();
   const { login } = useAuth();
   const [loading, setLoading] = useState(false);
-
-  // const showAlert = (message, type) => {
-  //   setAlert({ show: true, message, type });
-  //   setTimeout(() => setAlert({ show: false, message: "", type: "" }), 3000);
-  // };
 
   const handleGuestAccess = () => {
     console.log('Acceso como invitado');
@@ -34,8 +31,7 @@ function Login() {
     e.preventDefault();
 
     if (!formData.username || !formData.password) {
-      console.log('Por favor, completa todos los campos');
-      // showAlert('Por favor, completa todos los campos', 'error');
+      setValidationError('Por favor, completa todos los campos');
       return;
     }
 
@@ -46,15 +42,19 @@ function Login() {
       console.log('Login response:', data);
       login(data.user);
       console.log('Usuario logueado:', data.user);
-      // showAlert('¡Bienvenido! Iniciando sesión...', 'success');
+      setSuccessMessage("¡Inicio de sesión exitoso!");
       setTimeout(() => {
         navigate('/home');
         setLoading(false);
       }, 1000);
+      setValidationError(null);
     } catch (error) {
       const message = error instanceof Error ? error.message : String(error);
       console.error('Error durante el inicio de sesión:', message);
-      alert(message);
+      setValidationError(message);
+      setTimeout(() => {
+        setValidationError(null);
+      }, 4000);
       setLoading(false);
     }
   };
@@ -73,6 +73,16 @@ function Login() {
             <label htmlFor="password">Contraseña:</label>
             <input type="password" id="password" name="password" value={formData.password} onChange={handleChange} autoComplete='off' required/>
             <button className='buttonSign' type="submit" disabled={loading}>{loading ? 'Ingresando...' : 'Iniciar Sesión'}</button>
+            {validationError && (
+              <Alert severity="warning" sx={{ mt: 2 }}>
+                {validationError}
+              </Alert>
+            )}
+            {successMessage && (
+              <Alert severity="success" sx={{ mt: 2 }}>
+                {successMessage}
+              </Alert>
+            )}
             <button className="guestButton" type="button" onClick={handleGuestAccess}>¡Explora como invitado!</button>
             <Link to="/signup" className="login-link">¿No estás registrado?</Link>
             <Link to="/forgot" className="login-link">¿Olvidaste tu contraseña?</Link>

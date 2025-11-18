@@ -61,11 +61,9 @@ function Catalogue() {
     }, []);
 
 
-    // --- Filtrar libros cuando cambian filtros o búsqueda ---
     useEffect(() => {
         let booksToFilter = [...allBooks];
 
-        // --- Filtrar por género, autor y categoría
         (Object.keys(filters) as Array<keyof ActiveFilters>).forEach((key) => {
             const activeValues = filters[key];
             if (activeValues.length > 0) {
@@ -75,7 +73,6 @@ function Catalogue() {
             }
         });
 
-        // --- Filtrar por búsqueda
         const query = searchQuery.trim().toLowerCase();
         if (query) {
             booksToFilter = booksToFilter.filter(
@@ -85,7 +82,6 @@ function Catalogue() {
             );
         }
 
-        // --- Ordenar según opción seleccionada
         switch (sortOption) {
             case "mostComments":
                 booksToFilter.sort((a, b) => b.reviewCount - a.reviewCount);
@@ -113,7 +109,6 @@ function Catalogue() {
 
         setFilteredBooks(booksToFilter);
     }, [filters, allBooks, searchQuery, sortOption]);
-    // --- Cambiar filtros ---
     const handleFilterChange = (category: keyof ActiveFilters, value: string) => {
         setFilters((prevFilters) => {
             const newCategoryFilters = [...prevFilters[category]];

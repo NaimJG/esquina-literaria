@@ -39,7 +39,6 @@ const userService = {
         return data;
     },
 
-    // Cambiar email
     updateEmail: async (userId, newEmail) => {
         const response = await fetch(`${SERVER_URL}/users/${userId}/email`, {
         method: "PUT",
@@ -52,7 +51,6 @@ const userService = {
         return data;
     },
 
-    // Cambiar nombre de usuario
     updateUsername: async (userId, newUsername) => {
         const response = await fetch(`${SERVER_URL}/users/${userId}/username`, {
         method: "PUT",
@@ -65,7 +63,6 @@ const userService = {
         return data;
     },
 
-    // Cambiar contraseña
     updatePassword: async (userId, oldPassword, newPassword) => {
         const response = await fetch(`${SERVER_URL}/users/${userId}/password`, {
         method: "PUT",
