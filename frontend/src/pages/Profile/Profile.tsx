@@ -103,7 +103,6 @@ function Profile() {
       setScore(0);
       setSelectedBook(null);
 
-      // Actualizar reseñas
       fetchReviews(page);
     } catch (error) {
       console.error("Error al publicar reseña:", error);
@@ -137,7 +136,7 @@ function Profile() {
       await reviewService.updateReview(editingReview._id, {
         comment: editText.trim(),
         score: editScore,
-        scoreDate: new Date().toISOString(), // actualiza la fecha
+        scoreDate: new Date().toISOString(),
       });
       setMessage("✅ Reseña actualizada con éxito.");
       setEditingReview(null);
@@ -262,7 +261,6 @@ function Profile() {
           </div>
         )}
 
-        {/* 🔹 Sección de reseñas */}
         <section className="user-reviews-section">
           <h3>Mis reseñas</h3>
           {reviews.length === 0 ? (
@@ -329,7 +327,6 @@ function Profile() {
             </ul>
           )}
 
-          {/* 🔹 Paginación */}
           {totalPages > 1 && (
             <div className="pagination">
               <button disabled={page === 1} onClick={() => setPage(page - 1)}>
@@ -357,12 +354,6 @@ function Profile() {
             <li className='listElement'>
               <Link to="/profile/settings#password">Cambiar contraseña</Link>
             </li>
-            {/* <li className='listElement'>
-              <Link to="/profile/settings#color">Cambiar color de mi página</Link>
-            </li>
-            <li className='listElement'>
-              <Link to="/profile/settings#icon">Cambiar icono del perfil</Link>
-            </li> */}
             <li className='listButton'>
               <button onClick={handleLogout} className="logoutButton">
                 Cerrar sesión

@@ -4,6 +4,7 @@ import './SignUp.css';
 import userService from '../../service/userService';
 import * as React from 'react';
 import { useAuth } from '../../context/useAuth';
+import { Alert } from '@mui/material';
 
 function SignUp() {
   const [formData, setFormData] = useState({
@@ -15,6 +16,9 @@ function SignUp() {
   const [confirmPassword, setConfirmPassword] = useState('');
   const { login } = useAuth();
   const navigate = useNavigate();
+  const [validationError, setValidationError] = useState<string | null>(null);
+  const [successMessage, setSuccessMessage] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -27,13 +31,22 @@ function SignUp() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    setLoading(true);
     if (formData.email !== confirmEmail) {
-      alert("Los correos electrónicos no coinciden.");
+      setValidationError("Los correos electrónicos no coinciden.");
+      setLoading(false);
+      setTimeout(() => {
+        setValidationError(null);
+      }, 4000);
       return;
     }
 
     if (formData.password !== confirmPassword) {
-      alert("Las contraseñas no coinciden.");
+      setValidationError("Las contraseñas no coinciden.");
+      setLoading(false);
+      setTimeout(() => {
+        setValidationError(null);
+      }, 4000);
       return;
     }
     
@@ -45,12 +58,20 @@ function SignUp() {
 
     try {
       await userService.registerUser(userData);
-      alert('¡Registro exitoso!');
+      setSuccessMessage('¡Registro exitoso!');
       login(userData);
-      navigate('/home');
+      setTimeout(() => {
+        navigate('/home');
+      }, 1000);
+      setLoading(false);
+      setValidationError(null);
     } catch (error) {
       console.error("Error en el registro:", error);
-      alert("Hubo un error durante el registro.");
+      setLoading(false);
+      setValidationError("Hubo un error durante el registro.");
+            setTimeout(() => {
+        setValidationError(null);
+      }, 4000);
     }
   };
 
@@ -81,7 +102,17 @@ function SignUp() {
             <label htmlFor="confirm-password">Confirmar Contraseña:</label>
             <input type="password" id="confirm-password" name="confirm-password" value={confirmPassword} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setConfirmPassword(e.target.value)} autoComplete="new-password" required />
             
-            <button className='buttonSign' type="submit">Registrarse</button>
+            <button className='buttonSign' type="submit" disabled={loading}>{loading ? 'Cargando...' : 'Registrarse'}</button>
+            {validationError && (
+              <Alert severity="warning" sx={{ mt: 2 }}>
+                {validationError}
+              </Alert>
+            )}
+            {successMessage && (
+              <Alert severity="success" sx={{ mt: 2 }}>
+                {successMessage}
+              </Alert>
+            )}
             <Link to="/login" className="login-link">¿Ya estás registrado? Inicia sesión.</Link>
           </form>
         </div>

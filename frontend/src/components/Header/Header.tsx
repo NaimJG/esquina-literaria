@@ -59,7 +59,6 @@ function Header() {
             </div>
           </div>
 
-          {/* 🔍 Barra de búsqueda */}
           {location.pathname === "/home" && (
           <div className="searchBar">
             <input

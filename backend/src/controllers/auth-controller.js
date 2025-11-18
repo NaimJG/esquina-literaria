@@ -7,7 +7,7 @@ const login = async (req, res) => {
     
     const result = await authService.login(userdata.username, userdata.password);
 
-    res.status(200).json(result); // result incluirá el token y la info necesaria
+    res.status(200).json(result);
   } catch (err) {
     const statusCode = err.status || 500;
     res.status(statusCode).json({
