@@ -16,26 +16,16 @@ connectDB();
 const app = express();
 
 const allowedOrigins = [
-  "http://localhost:3000", // desarrollo
-  "https://esquina-literaria.vercel.app" // producción
+  "http://localhost:5173",
+  "https://esquina-literaria.vercel.app"
 ];
 
-// Middlewares
+// 1. CORS PRIMERO
 app.use(cors({
-  origin: function (origin, callback) {
-      // Permitir requests sin origin (como en Postman o server-side)
-      if (!origin) return callback(null, true);
+  origin: allowedOrigins,
+  credentials: true
+}));
 
-      if (allowedOrigins.includes(origin) || /\.vercel\.app$/.test(origin)) {
-        callback(null, true);
-      } else {
-        console.log("❌ CORS bloqueado para:", origin);
-        callback(new Error("No permitido por CORS"));
-      }
-    },
-    credentials: true,
-  })
-);
 app.use(express.json());
 
 // Rutas de prueba
