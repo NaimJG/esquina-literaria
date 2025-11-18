@@ -2,7 +2,6 @@ const reviewService = require("../services/review-service");
 
 const createReview = async (req, res) => {
   const { bookId } = req.params;
-
   const { userId, score, comment } = req.body;
 
   try {
