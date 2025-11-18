@@ -2,8 +2,6 @@ const reviewService = require("../services/review-service");
 
 const createReview = async (req, res) => {
   const { bookId } = req.params;
-  // The userId should come from the authenticated user's session or token.
-  // For now, let's assume it's in the request body for simplicity.
   const { userId, score, comment } = req.body;
 
   try {
