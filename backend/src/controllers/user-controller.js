@@ -15,7 +15,6 @@ const createUser = async (req, res) => {
   }
 };
 
-// Cambiar email
 const updateEmail = async (req, res) => {
   const { id } = req.params;
   const { newEmail } = req.body;
@@ -28,8 +27,6 @@ const updateEmail = async (req, res) => {
   }
 };
 
-
-// Cambiar nombre de usuario
 const updateUsername = async (req, res) => {
   const { id } = req.params;
   const { newUsername } = req.body;
@@ -42,7 +39,6 @@ const updateUsername = async (req, res) => {
   }
 };
 
-// Cambiar contraseña
 const updatePassword = async (req, res) => {
   const { id } = req.params;
   const { oldPassword, newPassword } = req.body;
